@@ -1,0 +1,15 @@
+node_modules/
+lib/
+coverage/
+Backups/
+tests/
+visual-studio/
+.env
+demo.txt
+jest.config.js
+readmetest.md
+tsconfig.json
+tslint.json
+.prettierrc
+
+.DS_Store

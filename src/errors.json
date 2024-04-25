@@ -1,0 +1,25 @@
+{
+    "E001" : "E001: Sender ID is empty " ,
+    "E002" : "E002: Route is empty . It should be promotional, transactional, or OTP " ,
+    "E003" : "E003: Please provide Valid number" ,
+    "E004" : "E004: Message is empty ",
+
+    "E005" : "E005: Missing phone number " ,
+    "E006" : "E006: Invalid phone number " ,
+    "E007" : "E007: Error parsing phone number " ,
+
+    "E008" : "E008: Please provide valid email ids" ,
+    "E009" : "E009: Subject is empty" ,
+    "E010" : "E010: from is required" ,
+    "E011" : "E011: fromName is required",
+    "E012" : "E012: Either bodyHtml or bodyText is required",
+
+    "E013" : "E013: phoneId is empty" ,
+    "E014" : "E014: template-name is empty",
+    "E015" : "E015: Language is empty" ,
+    
+
+    "SFV001" : "SFV001: No api key is defined while initializing Zixflow services. Please add api key as environment variable ZIXFLOW_API_KEY or pass it as an argument to constructor function",
+    "SFT001" : "SFT001: Api key must be of type string",
+    "SFV002" : "SFV002: Api key must not be a empty string"
+}
