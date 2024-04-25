@@ -1,9 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { WhatsAppDataInterface , WhatsappSuccessResponse } from "../../interfaces/whatsappInterface";
-import validateWhatsappData from "../../utilities/validateWhatsAppRequest";
-import config from '../../config.json'
-
-const { postWhatsAppApiUrl} = config;
+import { WhatsAppDataInterface , WhatsappSuccessResponse } from "../../interfaces/rootInterfaces";
+import validateWhatsappData from "../../utilities/validateWhatsAppData";
+import {POST_WHATSAPP_API_URL} from "../../constants";
 
 export default class WhatsApp {
   private __apiKey: String;
@@ -16,15 +14,17 @@ export default class WhatsApp {
 
     return new Promise<WhatsappSuccessResponse>(async (resolve , reject) => {
 
-       const isValid = validateWhatsappData(whatsAppData);
-            if (typeof isValid === 'string') {
-              resolve({status: false,message: isValid})
-                 return;
-          }
+      const validationObject = validateWhatsappData(whatsAppData);
+
+      if (validationObject.status === false) {
+        const errorMessage = validationObject.message;
+         resolve({status: validationObject.status , message: errorMessage})
+          return;
+       }
 
         const config: AxiosRequestConfig = {
             method: "post",
-            url: postWhatsAppApiUrl,
+            url: POST_WHATSAPP_API_URL,
             headers: {
               Authorization: `Bearer ${this.__apiKey}`,
               "Content-Type": "application/json",
@@ -35,23 +35,17 @@ export default class WhatsApp {
             
           try {
             const response: AxiosResponse = await axios(config);
-            resolve(response.data)
+
+            if (response && response.data) {
+              const responseObject = {status : response.data.status,message : response.data.message}
+              resolve(responseObject);
+            } 
           } catch (error) {
-            if((error as any).response) {
-              const statusCode = (error as any).response.status;
-              const errorMsg = (error as any).response;
-              if (statusCode === 401) {
-                  resolve({status: false, message: 'No tenant database for this user'});
-                } else {
-                   resolve({ status: false, message: 'Invalid data Provided'});
-                }
-            }
-            else {
-             resolve({ status: false, message: 'Network Error'});
-            }
+              resolve(error.response.data)
           }
 
     })
 
   }
 }
+

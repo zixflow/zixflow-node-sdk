@@ -1,10 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { EmailDataInterface  , EmailSuccessResponse} from "../../interfaces/emailInterface";
+import { EmailDataInterface  , EmailSuccessResponse} from "../../interfaces/rootInterfaces";
 
-import config from '../../config.json'
-import validateEmailRequestData from "../../utilities/validateEmailRequestData";
-
-const { postEmailApiUrl} = config;
+import validateEmailData from "../../utilities/validateEmailData";
+import {POST_EMAIL_API_URL} from "../../constants";
 
 export default class Email {
   private __apiKey: String;
@@ -17,15 +15,16 @@ export default class Email {
 
     return new Promise<EmailSuccessResponse>(async (resolve , reject) => {
 
-         const isValid = validateEmailRequestData(emailData);
-         if (typeof isValid === 'string') {
-           resolve({status: false , message: isValid })
-             return;
-           }
+      const validationObject = validateEmailData(emailData);
+      if (validationObject.status === false) {
+        const errorMessage = validationObject.message;
+         resolve({status: false , message: errorMessage})
+          return;
+       }
              
         const config: AxiosRequestConfig = {
             method: "post",
-            url: postEmailApiUrl,
+            url: POST_EMAIL_API_URL,
             headers: {
               Authorization: `Bearer ${this.__apiKey}`,
               "Content-Type": "application/json",
@@ -35,35 +34,14 @@ export default class Email {
 
           try {
             const response: AxiosResponse<any , any> = await axios(config);
-            if (response) {
-              const succesMsgFromDocs = { "status": true, "message": "Email sent successfully!"}
-              resolve(response.data);
-            }else {
-              reject();
-            }
+
+            if (response && response.data) {
+              const responseObject = {status : response.data.status,message : response.data.message}
+              resolve(responseObject);
+            } 
             
           } catch (error) {
-            const responseStatusCode = error.response?.status
-            const responseStatusText = error.response?.statusText
-            const responseData = error.response?.data
-            if((error as any).response) {
-              const statusCode = (error as any).response.status;
-              const errorMsg = (error as any).response;
-              if (statusCode === 401) {
-                  resolve({ status: false, message: "No token provided"}
-                )
-                } else {
-                    const invalidResponseFromDocs = { 
-                    "status": false,
-                    "message": "to[1] must be a valid email"
-                     }
-                  
-                  resolve(errorMsg.data)
-                }
-            }
-            else {
-             resolve({status: false,message: 'Network Error'});
-            }
+             resolve(error.response.data)
           }
 
     })

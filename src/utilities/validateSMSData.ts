@@ -1,15 +1,11 @@
-import { SMSDataInterface } from "../interfaces/smsInterface";
+
 import errors from '../errors.json';
 import validatePhoneWithCode from "./validatePhoneNumber";
+import {DataErrorInterface , SMSDataInterface } from '../interfaces/rootInterfaces';
 
-export default function validateSMSData(data:SMSDataInterface):  { status: boolean; message: string } {
+export default function validateSMSData(data:SMSDataInterface): DataErrorInterface  {
     
-    
-    
-   
-
     if (!data.senderId || (data.senderId === "")) {
-        // result =  errors.E001;
         return  {
             status : false,
             message : errors.E001
@@ -18,7 +14,6 @@ export default function validateSMSData(data:SMSDataInterface):  { status: boole
     }
 
     if (!data.route) {
-        // result = errors.E002;
         return  {
             status : false,
             message : errors.E002
@@ -45,7 +40,6 @@ export default function validateSMSData(data:SMSDataInterface):  { status: boole
     }
 
     if (!data.message) {
-        // result = errors.E004;
         return {
             status : false,
             message : errors.E004

@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import validateSMSData from "../../utilities/validateSMSData";
-import {SMSDataInterface , SuccessResponse} from '../../interfaces/smsInterface';
-import config from '../../config.json'
+import {SMSDataInterface , SuccessResponse} from '../../interfaces/rootInterfaces';
 
-const { postSMSApiUrl} = config;
+import {POST_SMS_API_URL} from "../../constants";
+
 
 export default class SMS {
   private __apiKey:String;
@@ -23,16 +23,18 @@ export default class SMS {
                resolve({status: false , message: errorMessage})
                 return;
              }
-           
+             
+             
             const config: AxiosRequestConfig = {
                 method: "post",
-                url: postSMSApiUrl,
+                url: POST_SMS_API_URL,
                 headers: {
                   Authorization: `Bearer ${this.__apiKey}`,
                   "Content-Type": "application/json",
                 },
                 data: JSON.stringify(smsData),
               };
+
 
           try {
             const response: AxiosResponse = await axios(config);
