@@ -1,14 +1,21 @@
 import { EmailDataInterface , DataErrorInterface} from "../interfaces/rootInterfaces";
-import validateEmailIds from "./validateEmailId";
+import emailValidator from "./emailValidator";
 import errors from '../errors.json';
 
 export default function validateEmailData(data:EmailDataInterface): DataErrorInterface {
     
+    
     if (data.to) {
-        return  {
-            status : true,
-            message : errors.E008
+
+        const result = emailValidator(data.to)
+        if (result.status === false) {
+            return  {
+                status : false,
+                message : result.message
+            }
         }
+        
+        
     }
 
     if (!data.subject) {
@@ -39,13 +46,8 @@ export default function validateEmailData(data:EmailDataInterface): DataErrorInt
         }
     }
 
-    if (!data.bodyHtml && data.bodyText || !data.bodyText && data.bodyHtml) {
-     
-        return  {
-            status : false,
-            message : "success.Either one value is present"
-        }
-    }
+
+    
 
     else {
         return {

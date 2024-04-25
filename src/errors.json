@@ -13,6 +13,8 @@
     "E010" : "E010: from is required" ,
     "E011" : "E011: fromName is required",
     "E012" : "E012: Either bodyHtml or bodyText is required",
+    "E0121" : "E0121: Either bodyHtml or bodyText is required",
+    
 
     "E013" : "E013: phoneId is empty" ,
     "E014" : "E014: template-name is empty",

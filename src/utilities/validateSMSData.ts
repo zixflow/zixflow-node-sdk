@@ -5,6 +5,8 @@ import {DataErrorInterface , SMSDataInterface } from '../interfaces/rootInterfac
 
 export default function validateSMSData(data:SMSDataInterface): DataErrorInterface  {
     
+    
+
     if (!data.senderId || (data.senderId === "")) {
         return  {
             status : false,
@@ -32,7 +34,6 @@ export default function validateSMSData(data:SMSDataInterface): DataErrorInterfa
     } 
 
     if (!data.route) {
-        // result = errors.E003;
         return {
             status : false,
             message : errors.E003

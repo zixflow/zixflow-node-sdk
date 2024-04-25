@@ -16,6 +16,7 @@ export default class Email {
     return new Promise<EmailSuccessResponse>(async (resolve , reject) => {
 
       const validationObject = validateEmailData(emailData);
+      
       if (validationObject.status === false) {
         const errorMessage = validationObject.message;
          resolve({status: false , message: errorMessage})
