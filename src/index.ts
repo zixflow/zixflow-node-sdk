@@ -3,6 +3,7 @@ import SMS from "./services/sms/sms";
 import WhatsApp from "./services/whatsApp/whatsApp";
 import errors from "../src/errors.json";
 
+
 export default class Zixflow {
   private __apiKey: string;
 
@@ -22,7 +23,11 @@ export default class Zixflow {
         if (typeof this.__apiKey !== "string") throw Error(errors["SFT001"])
         if (this.__apiKey.trim() === "") throw Error(errors["SFV002"])
   }
+
 }
+
+
+
 
 
 

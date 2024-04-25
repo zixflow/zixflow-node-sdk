@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import validateData from "../../utilities/validateSMSRequest";
+import validateSMSData from "../../utilities/validateSMSData";
 import {SMSDataInterface , SuccessResponse} from '../../interfaces/smsInterface';
 import config from '../../config.json'
 
@@ -15,14 +15,15 @@ export default class SMS {
   async sendSMS(smsData: SMSDataInterface): Promise<SuccessResponse> {
     
     return new Promise<SuccessResponse>(async (resolve , reject) => {
-
-            const isValid = validateData(smsData);
             
-            if (typeof isValid === 'string') {
-              resolve({status: false , message: isValid })
+            const validationObject = validateSMSData(smsData);
+            
+            if (validationObject.status === false) {
+              const errorMessage = validationObject.message;
+               resolve({status: false , message: errorMessage})
                 return;
              }
-          
+           
             const config: AxiosRequestConfig = {
                 method: "post",
                 url: postSMSApiUrl,
@@ -35,28 +36,14 @@ export default class SMS {
 
           try {
             const response: AxiosResponse = await axios(config);
-    
-                if (response && response.data) {
-                  const responseObject = {status : response.data.status,message : response.data.message}
-                  resolve(responseObject);
-                } 
-                else {
-                  resolve({ "status": false , "message": "Response is undefined" })
-                }
+
+              if (response && response.data) {
+                const responseObject = {status : response.data.status,message : response.data.message}
+                resolve(responseObject);
+              } 
+                
           } catch (error) {
-            if((error as any).response) {
-              const statusCode = (error as any).response.status;
-              if (statusCode === 401) {
-                  resolve({ "status": false , "message": "Unauthorised" });
-                  return
-                } else {
-                  resolve({status: false , message: "Unauthorised"})
-                  return;
-                }
-            }
-            else {
-             resolve({status: false, message: 'Network Error'});
-            }
+            resolve(error.response.data)
           }
 
     })
