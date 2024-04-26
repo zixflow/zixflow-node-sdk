@@ -1,7 +1,8 @@
-import axios , { AxiosRequestConfig} from 'axios';
+import { AxiosRequestConfig} from 'axios';
+import { RequestConfigParams } from '../types/rootTypes';
 
 
-export default function createAxiosRequestConfig (apiKey , apiUrl , method , data) {
+export default function createAxiosConfig ({ apiKey , apiUrl , method , data }:RequestConfigParams) {
 
     const config:AxiosRequestConfig = {
         method: method,

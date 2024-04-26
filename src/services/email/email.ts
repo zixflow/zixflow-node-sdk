@@ -1,13 +1,15 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { EmailDataInterface  , EmailSuccessResponse} from "../../interfaces/rootInterfaces";
 
 import validateEmailData from "../../utilities/validateEmailData";
 import {POST_EMAIL_API_URL} from "../../constants";
+import createAxiosConfig from "../../utilities/axiosConfig";
+import axiosWrapper from "../../utilities/axiosRequestWrapper";
+import { AxiosRequestConfig } from "axios";
 
 export default class Email {
-  private __apiKey: String;
+  private __apiKey: string;
 
-  constructor( apiKey?:String ) {
+  constructor( apiKey?:string ) {
     this.__apiKey = apiKey;
   }
 
@@ -15,37 +17,28 @@ export default class Email {
 
     return new Promise<EmailSuccessResponse>(async (resolve , reject) => {
 
-      const validationObject = validateEmailData(emailData);
-      
-      if (validationObject.status === false) {
-        const errorMessage = validationObject.message;
-         resolve({status: false , message: errorMessage})
-          return;
-       }
+              const validationResult = validateEmailData(emailData);
+              if (validationResult.status === false) {
+                const errorMessage = validationResult.message;
+                resolve({status: false , message: errorMessage})
+                  return;
+              }
              
-        const config: AxiosRequestConfig = {
-            method: "post",
-            url: POST_EMAIL_API_URL,
-            headers: {
-              Authorization: `Bearer ${this.__apiKey}`,
-              "Content-Type": "application/json",
-            },
-            data: JSON.stringify(emailData),
-          };
+                const config:AxiosRequestConfig = createAxiosConfig({
+                  apiKey : this.__apiKey ,
+                  apiUrl : POST_EMAIL_API_URL ,
+                  method : "post" ,
+                  data : emailData
+                });
 
-          try {
-            const response: AxiosResponse<any , any> = await axios(config);
-
-            if (response && response.data) {
-              const responseObject = {status : response.data.status,message : response.data.message}
-              resolve(responseObject);
-            } 
-            
-          } catch (error) {
-             resolve(error.response.data)
-          }
-
+                await axiosWrapper(config).then(response => {
+                  if (response) {
+                    const responseObject = {status : response.status,message : response.message}
+                    resolve(responseObject);
+                  } 
+                }).catch(error => {
+                  resolve(error.response?.data)
+                })
     })
-
   }
 }

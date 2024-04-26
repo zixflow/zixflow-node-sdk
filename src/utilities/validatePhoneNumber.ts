@@ -8,8 +8,6 @@ export default function validatePhoneWithCode(phNumber:number | string): DataErr
    
     if (phoneNumber) {
         const countryCode = phoneNumber.countryCallingCode;
-        const countryName = phoneNumber.country;
-        const formattedPhoneNumber = phoneNumber.formatInternational();
         const nationalNumber = phoneNumber.nationalNumber;
         
         if (countryCode && nationalNumber && nationalNumber.length === 10) {

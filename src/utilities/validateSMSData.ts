@@ -15,15 +15,12 @@ export default function validateSMSData(data: SMSDataInterface): DataErrorInterf
         case (!data.route):
             error.message = errors.E002;
             break;
-        case (!data.route):
-            error.message = errors.E003;
-            break;
         case (!data.message):
             error.message = errors.E004;
             break;
         case (data.number !== undefined || data.number !== ""):
-        const phResult: DataErrorInterface = validatePhoneWithCode(data.number);
-        return phResult;
+        const result: DataErrorInterface = validatePhoneWithCode(data.number);
+        return result;
         
         default:
             error.status = true;

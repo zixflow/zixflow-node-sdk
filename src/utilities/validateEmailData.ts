@@ -4,57 +4,38 @@ import errors from '../errors.json';
 
 export default function validateEmailData(data:EmailDataInterface): DataErrorInterface {
     
-    
-    if (data.to) {
+    let error: DataErrorInterface = {
+        status: false,
+        message: ""
+    };
 
+    if (data.to) {
         const result = emailValidator(data.to)
         if (result.status === false) {
-            return  {
-                status : false,
-                message : result.message
-            }
-        }
-        
-        
+            error.message = result.message
+        } 
     }
 
-    if (!data.subject) {
-        return  {
-            status : false,
-            message : errors.E009
-        }
+    switch(true) {
+        case (!data.subject) : 
+              error.message = errors.E009;
+              break;
+
+        case (!data.from) : 
+        error.message = errors.E010;
+        break;
+
+        case (!data.fromName) : 
+        error.message = errors.E011;
+        break;
+
+        case (!data.bodyHtml && !data.bodyText) : 
+        error.message = errors.E012;
+        break;
+
+        default : 
+            error.status = true;
+            error.message = "All values are valid";
     }
-
-    if (!data.from) {
-        return  {
-            status : false,
-            message : errors.E010
-        }
-    }
-
-    if (!data.fromName) {
-        return  {
-            status : false,
-            message : errors.E011
-        }
-    }
-
-    if (!data.bodyHtml && !data.bodyText) {
-        return  {
-            status : false,
-            message : errors.E012
-        }
-    }
-
-
-    
-
-    else {
-        return {
-                status : true,
-                message : "All values are valid"
-            }
-       }
-
-   
+    return error;
 }

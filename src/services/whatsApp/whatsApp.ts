@@ -1,12 +1,14 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosRequestConfig} from "axios";
 import { WhatsAppDataInterface , WhatsappSuccessResponse } from "../../interfaces/rootInterfaces";
 import validateWhatsappData from "../../utilities/validateWhatsAppData";
 import {POST_WHATSAPP_API_URL} from "../../constants";
+import createAxiosConfig from "../../utilities/axiosConfig";
+import axiosWrapper from "../../utilities/axiosRequestWrapper";
 
 export default class WhatsApp {
-  private __apiKey: String;
+  private __apiKey: string;
 
-  constructor(apiKey?: String) {
+  constructor(apiKey?: string) {
     this.__apiKey = apiKey;
   }
 
@@ -14,38 +16,31 @@ export default class WhatsApp {
 
     return new Promise<WhatsappSuccessResponse>(async (resolve , reject) => {
 
-      const validationObject = validateWhatsappData(whatsAppData);
+      const validationResult = validateWhatsappData(whatsAppData);
 
-      if (validationObject.status === false) {
-        const errorMessage = validationObject.message;
-         resolve({status: validationObject.status , message: errorMessage})
+      if (validationResult.status === false) {
+        const errorMessage = validationResult.message;
+         resolve({status: validationResult.status , message: errorMessage})
           return;
        }
 
-        const config: AxiosRequestConfig = {
-            method: "post",
-            url: POST_WHATSAPP_API_URL,
-            headers: {
-              Authorization: `Bearer ${this.__apiKey}`,
-              "Content-Type": "application/json",
-            },
-            data: JSON.stringify(whatsAppData),
-          };
+          const config:AxiosRequestConfig = createAxiosConfig({
+              apiKey : this.__apiKey ,
+              apiUrl : POST_WHATSAPP_API_URL ,
+              method : "post" ,
+              data : whatsAppData
+          })
            
-            
-          try {
-            const response: AxiosResponse = await axios(config);
+            await axiosWrapper(config).then(response => {
+              if (response) {
+                const responseObject = {status : response.status,message : response.message}
+                resolve(responseObject);
+              } 
+            }).catch(error => {
+                resolve(error.response?.data)
+            })
 
-            if (response && response.data) {
-              const responseObject = {status : response.data.status,message : response.data.message}
-              resolve(responseObject);
-            } 
-          } catch (error) {
-              resolve(error.response.data)
-          }
-
-    })
-
+          })
   }
 }
 
