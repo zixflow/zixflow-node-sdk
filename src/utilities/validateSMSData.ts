@@ -1,31 +1,31 @@
 import errors from '../errors.json';
-import validatePhoneWithCode from "./validatePhoneNumber";
+import validatePhoneWithCode from './validatePhoneNumber';
 import { DataErrorInterface, SMSDataInterface } from '../interfaces/rootInterfaces';
 
 export default function validateSMSData(data: SMSDataInterface): DataErrorInterface {
-    let error: DataErrorInterface = {
-        status: false,
-        message: ""
-    };
+  let error: DataErrorInterface = {
+    status: false,
+    message: '',
+  };
 
-    switch (true) {
-        case (!data.senderId || data.senderId === ""):
-            error.message = errors.E001;
-            break;
-        case (!data.route):
-            error.message = errors.E002;
-            break;
-        case (!data.message):
-            error.message = errors.E004;
-            break;
-        case (data.number !== undefined || data.number !== ""):
-        const result: DataErrorInterface = validatePhoneWithCode(data.number);
-        return result;
-        
-        default:
-            error.status = true;
-            error.message = "All values are valid";
-    }
+  switch (true) {
+    case !data.senderId || data.senderId === '':
+      error.message = errors.E001;
+      break;
+    case !data.route:
+      error.message = errors.E002;
+      break;
+    case !data.message:
+      error.message = errors.E004;
+      break;
+    case data.number !== undefined || data.number !== '':
+      const result: DataErrorInterface = validatePhoneWithCode(data.number);
+      return result;
 
-    return error;
+    default:
+      error.status = true;
+      error.message = 'All values are valid';
+  }
+
+  return error;
 }

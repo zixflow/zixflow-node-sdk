@@ -1,6 +1,6 @@
-export type RequestConfigParams {
-    apiKey : string ;
-    apiUrl : string ;
-    method : string ;
-    data : {}
-  }
+export type RequestConfigParams = {
+  apiKey: string;
+  apiUrl: string;
+  method: string;
+  data: {};
+};
