@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import validateSMSData from "../../utilities/validateSMSData";
 import {SMSDataInterface , SuccessResponse} from '../../interfaces/rootInterfaces';
-
+import createAxiosRequestConfig from "../../utilities/axiosRequestConfig";
 import {POST_SMS_API_URL} from "../../constants";
-
+import axiosWrapper from "../../utilities/axiosRequestWrapper";
 
 export default class SMS {
   private __apiKey:String;
@@ -18,35 +18,31 @@ export default class SMS {
             
             const validationObject = validateSMSData(smsData);
             
-            if (validationObject.status === false) {
+            if (validationObject?.status !== true) {
               const errorMessage = validationObject.message;
                resolve({status: false , message: errorMessage})
                 return;
-             }
+             } 
              
-             
-            const config: AxiosRequestConfig = {
-                method: "post",
-                url: POST_SMS_API_URL,
-                headers: {
-                  Authorization: `Bearer ${this.__apiKey}`,
-                  "Content-Type": "application/json",
-                },
-                data: JSON.stringify(smsData),
-              };
+            
+           const config = createAxiosRequestConfig(
+            this.__apiKey,
+            POST_SMS_API_URL , 
+            "post" , 
+            smsData ,
+          );
+          
 
-
-          try {
-            const response: AxiosResponse = await axios(config);
-
-              if (response && response.data) {
-                const responseObject = {status : response.data.status,message : response.data.message}
+            await axiosWrapper(config).then(response => {
+              if (response) {
+                const responseObject = {status : response.status ,message : response.message}
                 resolve(responseObject);
-              } 
-                
-          } catch (error) {
-            resolve(error.response.data)
-          }
+              }     
+            }).catch(error => {
+              resolve(error.response?.data)
+            }) 
+              
+          
 
     })
 
