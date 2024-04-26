@@ -6,6 +6,7 @@ tests/
 visual-studio/
 .env
 demo.txt
+demo.js
 jest.config.js
 readmetest.md
 tsconfig.json

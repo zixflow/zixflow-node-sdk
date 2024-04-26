@@ -43,7 +43,7 @@ https://zixflow.com/
 ### Installing the SDK
 The preferred way to install the Zixflow SDK for node js is to use the npm package manager for node js.<br>
 
-Go to your node js project directory.
+Go to your node js project root directory.
 
 > cd your_project_directory
 
@@ -58,7 +58,7 @@ This will install the Zixflow SDK into your node js project.
 
 ### Loading the SDK
 After you install the SDK, you can load the Zixflow SDK in your node js application by importing the Zigflow class
-> const ZixFlow = require("zixflow")
+> const Zixflow = require("zixflow").default;
 
 ---
 
@@ -73,7 +73,7 @@ To hold this information, we recommend you create an environment variable with <
 
  <mark>**We do not recommend hard coding your Zixflow credentials in your scripts. Hard coding credentials poses a risk of exposing your api key.Add it to .env file and access the key like below**</mark>
 
-> <mark>const ZixFlow = require("zixflow")</mark>
+> <mark>const ZixFlow = require("zixflow").default;</mark>
 >
 > <mark>**const zixflow = new Zixflow( process.env.ZIXFLOW_API_KEY )**</mark>
  
@@ -106,11 +106,11 @@ When using the SDK for node js, you need to add the SDK package to your applicat
 
 Import the SDK for node js as shown below . This includes the entire SDK into your code.
 
-> const Zixflow = require("zixflow")
+> const Zixflow = require("zixflow").default;
 
 Begin by creating an instance of the Sainofirst SDK and assign it to a variable.
 
-> const zixflow = new Zixflow( ZIXFLOW_API_KEY )
+> const zixflow = new Zixflow( process.env.ZIXFLOW_API_KEY )
 
 To access service features through the Zixflow class, you first access a service through which you need access to a set of features provided by the underlying service instance. Generally there is one service instance provided for each service.
 
@@ -144,7 +144,7 @@ Zixflow sms service provides easy api for sending and scheduling text messages w
 
 Begin by loading Zixflow SDK into your node js project.
 
-> const Zixflow = require("zixflow")
+> const Zixflow = require("zixflow").default;
 
 Create a new instance of Zixflow SDK. Make sure you have configured your apikey in environment variable.
 
@@ -156,11 +156,11 @@ Access sms service from the SDK.
 
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 
-> const Sms = require("zixflow/lib/services/sms")
+> const Sms = require("zixflow/lib/services/sms").default
 
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
 
-> const sms = new Sms()
+> const sms = new Sms("your_zixflow-api-key")
 
 ## Sending a text message
 
@@ -184,7 +184,7 @@ You can easily send text message by calling the <strong>sendSMS method</strong> 
 
 ```js
 
-    const ZixFlow = require('zixflow');
+    const ZixFlow = require('zixflow').default;
     
     const zixflow = new ZixFlow("your_zixflow_api_token")
 
@@ -265,7 +265,7 @@ You can send marketing messages, newsletters, updates, coupons, and invitations 
 
 Begin by loading *Zixflow* SDK into your node js project.
 
-> const ZixFlow = require("zixflow")
+> const ZixFlow = require("zixflow").default;
 
 Create a new instance of *Zixflow* SDK. Make sure you have configured your apikey in environment variable.
 
@@ -277,11 +277,11 @@ Access email service from the SDK
 
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 
-> const Email = require("zixflow/lib/services/email")
+> const Email = require("zixflow/lib/services/email").default;
 
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
 
-> const email = new Email()
+> const email = new Email("your_zixflow-api-key")
 
 ## <center>Required configuration options for email service
 
@@ -302,7 +302,7 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 
 ```js
 
-  const ZixFlow = require('zixflow');
+  const ZixFlow = require('zixflow').default;
 
   const zixflow = new ZixFlow("your_zixflow_api_token")
 
@@ -356,7 +356,7 @@ This API allows you to craft and deliver messages in compliance with WhatsApp’
 
 Begin by loading *Zixflow* SDK into your node js project.
 
-> const ZixFlow = require("zixflow")
+> const ZixFlow = require("zixflow").default;
 
 Create a new instance of *Zixflow* SDK. Make sure you have configured your apikey in environment variable.
 
@@ -368,7 +368,11 @@ Access whatsApp service from the SDK
 
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 
-> const whatsApp = require("zixflow/lib/services/whatsApp")
+> const WhatsApp = require("zixflow/lib/services/whatsApp").default
+
+Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
+
+> const whatsApp = new WhatsApp("your_zixflow-api-key")
 
 ## <center>Required configuration options for whatsApp service
 
@@ -385,9 +389,9 @@ Alternatively if you do not want to load whole sdk you can also access individua
 
 ```js
 
-    const ZixFlow = require('zixflow');
+    const ZixFlow = require('zixflow').default;
 
-    const zixflow = new ZixFlow("zixflow_api_token")
+    const zixflow = new ZixFlow("your_zixflow_api_token")
 
     const  data = JSON.stringify({
           "to": "13023895111",
