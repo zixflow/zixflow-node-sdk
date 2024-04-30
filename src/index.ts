@@ -16,7 +16,7 @@ export default class Zixflow {
 
   constructor(apiKey?: string , domain?: string) {
       this.__apiKey = apiKey || process.env.ZIXFLOW_API_KEY
-      this.domain = domain || process.env.ZIXFLOW_DOMAIN || "https://api.zixflow.com"
+      this.domain = domain || "https://api.zixflow.com"
       this.sms = new SMS(this.__apiKey , this.domain);
       this.email = new Email(this.__apiKey , this.domain);
       this.whatsApp = new WhatsApp(this.__apiKey , this.domain);

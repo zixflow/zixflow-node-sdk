@@ -1,9 +1,9 @@
 # <span style="color:white">***Zixflow SDK***</span>
 
 
-The Zixflow SDK for node js provides a node js API for Zixflow services. You can use the node js API to build libraries or applications for node js.
+The Zixflow SDK provides a node js API for Zixflow services. You can use this API to build libraries or applications for node js.
 
-Using the SDK for node js makes it possible to realize a number of compelling use cases. their are several things you can build by using the SDK for node js.
+Using this SDK makes it possible to realize a number of compelling use cases and there are several things you can build.
 
 https://zixflow.com/
 
@@ -144,11 +144,35 @@ Consider the following code , this is used to access class of Sms service , Emai
 
 To access individual service begin by importing that service
 
-> const Sms = require("zixflow/lib/services/sms")
+```js
+//For **CommonJs**
+const Sms = require("zixflow/lib/services/sms/sms").default;
+const sms = new Sms(process.env.ZIXFLOW_API_KEY);
 
-Create an instance of the service and assign it to a variable.
+const Email = require("zixflow/lib/services/email/email").default;
+const email = new Email(process.env.ZIXFLOW_API_KEY);
 
-> const sms = new Sms()
+const WhatsApp = require("zixflow/lib/services/whatsApp/whatsApp").default;
+const whatsApp = new WhatsApp(process.env.ZIXFLOW_API_KEY);
+```
+```js
+//For **ES6**
+import SmsClass from 'zixflow/lib/services/sms/sms.js';
+const Sms = SmsClass.default;
+const sms = new Sms(process.env.ZIXFLOW_API_KEY);
+
+import EmailClass from 'zixflow/lib/services/email/email.js';
+const Email = EmailClass.default;
+const email = new Email(process.env.ZIXFLOW_API_KEY);
+
+import WhatsAppClass from 'zixflow/lib/services/whatsApp/whatsApp.js';
+const WhatsApp = WhatsAppClass.default;
+const whatsApp = new WhatsApp(process.env.ZIXFLOW_API_KEY);
+```
+
+
+
+
 ---
 # Sms Service
 
@@ -218,6 +242,31 @@ You can easily send text message by calling the <strong>sendSMS method</strong> 
 
     zixflow.sms.sendSMS(data)
 ```
+
+## Response from server for SMS Service
+```js
+     // 200-Success 
+      { 
+        "status": true,
+        "message": "SMS sent successfully"
+      }
+```
+```js
+      // 400-Bad Request
+      {
+      "status": false,
+      "message": "Invalid data Provided"
+      }  
+```
+```js
+      // 401-Unauthorised
+      {
+      "status": false,
+      "message": "Unauthorised"
+      }
+```
+
+
 
 ## Choosing the right type of connectivity
 
@@ -344,6 +393,29 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 
 ```
 
+## Response from server for Email Service
+```js
+     // 200-Success 
+      { 
+        "status": true,
+        "message": "Email sent successfully!"
+      }
+```
+```js
+      // 400-Bad Request
+      {
+      "status": false,
+      "message": "to[1] must be a valid email"
+      }  
+```
+```js
+      // 401-Unauthorised
+      {
+      "status": false,
+      "message": "No token provided"
+      }
+```
+
 ## <center><ins>Upload Email Attachment</ins></center>
 
 Purpose of API is whenever the user wants to send an attachment in the email. user need to upload attachment in *Zixflow* platform first. Zixflow will provide id represents to attachment. and the user can send this id in send email API's attachment field to send attachment along with the email.
@@ -352,9 +424,6 @@ Purpose of API is whenever the user wants to send an attachment in the email. us
 |:----:|:----: |:----:|:----:|
 |file|`REQUIRED`| form-data | binary file data|
 
-```
-Write code snippet for a function to upload the formdata
-```
 
 [This syntax is used for hiding the content and not render]:#
 
@@ -403,7 +472,7 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 |submissionStatus|`OPTIONAL`|boolean| Indicates whether to wait for the submission status. Set it to “true” if you want to wait for the submission status; otherwise, it defaults to “false.”         |
 
 ```js
-
+    
     const ZixFlow = require('zixflow').default;
 
     const zixflow = new ZixFlow("your_zixflow_api_token")
@@ -420,6 +489,29 @@ Create an instance of the service and assign it to a variable. Make sure you hav
         });
 
     zixflow.whatsApp.sendWhatsAppTemplate(data)
+```
+
+## Response from server for WhatsApp Service
+```js
+     // 200-Success 
+      { 
+        "status": true,
+        "message": "Message sent successfully"
+      }
+```
+```js
+      // 400-Bad Request
+      {
+      "status": false,
+      "message": "Invalid data Provided"
+      }  
+```
+```js
+      // 401-Unauthorised
+      {
+      "status": false,
+      "message": "Unauthorised"
+      }
 ```
 
 
