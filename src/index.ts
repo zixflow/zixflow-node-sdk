@@ -1,7 +1,7 @@
 import Email from "./services/email/email";
 import SMS from "./services/sms/sms";
 import WhatsApp from "./services/whatsApp/whatsApp";
-import errors from "../src/errors.json";
+import errors from "./errors.json";
 
 
 export class Zixflow {
