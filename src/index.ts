@@ -4,7 +4,7 @@ import WhatsApp from "./services/whatsApp/whatsApp";
 import errors from "./errors.json";
 
 
-export class Zixflow {
+export default class Zixflow {
   private __apiKey: string;
   private domain: string;
 
