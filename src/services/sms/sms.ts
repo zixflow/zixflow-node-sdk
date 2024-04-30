@@ -1,5 +1,5 @@
 import validateSMSData from '../../utilities/validateSMSData';
-import { SMSDataInterface, SuccessResponse } from '../../interfaces/rootInterfaces';
+import { SMSDataInterface, SuccessResponse , ErrorResponse } from '../../interfaces/rootInterfaces';
 import createAxiosConfig from '../../utilities/axiosConfig';
 import { POST_SMS_API_URL } from '../../constants';
 import axiosWrapper from '../../utilities/axiosRequestWrapper';
@@ -7,13 +7,15 @@ import { AxiosRequestConfig } from 'axios';
 
 export default class SMS {
   private __apiKey: string;
+  private domain: string;
 
-  constructor(apiKey?: string) {
+  constructor(apiKey?: string , domain?: string) {
     this.__apiKey = apiKey || process.env.ZIXFLOW_API_KEY;
+    this.domain = domain || process.env.ZIXFLOW_DOMAIN || "https://api.zixflow.com"
   }
 
-  async sendSMS(smsData: SMSDataInterface): Promise<SuccessResponse> {
-    return new Promise<SuccessResponse>(async (resolve, reject) => {
+  async sendSMS(smsData: SMSDataInterface): Promise<SuccessResponse | ErrorResponse> {
+    return new Promise<SuccessResponse | ErrorResponse>(async (resolve, reject) => {
       const validationResult = validateSMSData(smsData);
 
       if (validationResult?.status !== true) {
@@ -21,10 +23,10 @@ export default class SMS {
         resolve({ status: false, message: errorMessage });
         return;
       }
-
+      
       const config: AxiosRequestConfig = createAxiosConfig({
         apiKey: this.__apiKey,
-        apiUrl: POST_SMS_API_URL,
+        apiUrl: `${this.domain}${POST_SMS_API_URL}`,
         method: 'post',
         data: smsData,
       });
@@ -37,6 +39,8 @@ export default class SMS {
           }
         })
         .catch((error) => {
+          console.log(error.response);
+          
           resolve(error.response?.data);
         });
     });

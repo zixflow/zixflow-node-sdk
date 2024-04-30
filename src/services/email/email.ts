@@ -1,4 +1,4 @@
-import { EmailDataInterface, EmailSuccessResponse } from '../../interfaces/rootInterfaces';
+import { EmailDataInterface, SuccessResponse , ErrorResponse } from '../../interfaces/rootInterfaces';
 
 import validateEmailData from '../../utilities/validateEmailData';
 import { POST_EMAIL_API_URL } from '../../constants';
@@ -8,13 +8,15 @@ import { AxiosRequestConfig } from 'axios';
 
 export default class Email {
   private __apiKey: string;
+  private domain: string;
 
-  constructor(apiKey?: string) {
+  constructor(apiKey?: string , domain?: string) {
     this.__apiKey = apiKey;
+    this.domain = domain || process.env.ZIXFLOW_DOMAIN || "https://api.zixflow.com"
   }
 
-  async sendEmail(emailData: EmailDataInterface): Promise<EmailSuccessResponse> {
-    return new Promise<EmailSuccessResponse>(async (resolve, reject) => {
+  async sendEmail(emailData: EmailDataInterface): Promise<SuccessResponse | ErrorResponse> {
+    return new Promise<SuccessResponse | ErrorResponse>(async (resolve, reject) => {
       const validationResult = validateEmailData(emailData);
       if (validationResult.status === false) {
         const errorMessage = validationResult.message;
@@ -24,7 +26,7 @@ export default class Email {
 
       const config: AxiosRequestConfig = createAxiosConfig({
         apiKey: this.__apiKey,
-        apiUrl: POST_EMAIL_API_URL,
+        apiUrl: `${this.domain}${POST_EMAIL_API_URL}`,
         method: 'post',
         data: emailData,
       });

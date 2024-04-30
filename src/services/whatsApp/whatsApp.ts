@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { WhatsAppDataInterface, WhatsappSuccessResponse } from '../../interfaces/rootInterfaces';
+import { WhatsAppDataInterface, SuccessResponse , ErrorResponse } from '../../interfaces/rootInterfaces';
 import validateWhatsappData from '../../utilities/validateWhatsAppData';
 import { POST_WHATSAPP_API_URL } from '../../constants';
 import createAxiosConfig from '../../utilities/axiosConfig';
@@ -7,13 +7,15 @@ import axiosWrapper from '../../utilities/axiosRequestWrapper';
 
 export default class WhatsApp {
   private __apiKey: string;
+  private domain: string;
 
-  constructor(apiKey?: string) {
+  constructor(apiKey?: string , domain?: string) {
     this.__apiKey = apiKey;
+    this.domain = domain || process.env.ZIXFLOW_DOMAIN || "https://api.zixflow.com"
   }
 
-  async sendWhatsAppTemplate(whatsAppData: WhatsAppDataInterface): Promise<WhatsappSuccessResponse> {
-    return new Promise<WhatsappSuccessResponse>(async (resolve, reject) => {
+  async sendWhatsAppTemplate(whatsAppData: WhatsAppDataInterface): Promise<SuccessResponse | ErrorResponse> {
+    return new Promise<SuccessResponse | ErrorResponse>(async (resolve, reject) => {
       const validationResult = validateWhatsappData(whatsAppData);
 
       if (validationResult.status === false) {
@@ -24,7 +26,7 @@ export default class WhatsApp {
 
       const config: AxiosRequestConfig = createAxiosConfig({
         apiKey: this.__apiKey,
-        apiUrl: POST_WHATSAPP_API_URL,
+        apiUrl: `${this.domain}${POST_WHATSAPP_API_URL}`,
         method: 'post',
         data: whatsAppData,
       });

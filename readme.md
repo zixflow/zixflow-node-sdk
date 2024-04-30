@@ -30,7 +30,7 @@ https://zixflow.com/
  > Our APIs are based around REST architecture 
  >
  >> - Our AI Engine enables maximum delivery with automated backup routing.
- >> - Our APIs use the basic HTTP request codes: POST, GET, PATCH, DELETE.
+ >> - Our APIs use the basic HTTPS request codes: POST, GET, PATCH, DELETE.
  >> - You can import and test all our full API collection in the Postman app by clicking on the ’ Run in Postman’ button.
  >
  > Note:  Any requests made using the valid API credentials will affect the real-time data in your zixflow account &excl;
@@ -57,8 +57,18 @@ This will install the Zixflow SDK into your node js project.
 
 
 ### Loading the SDK
-After you install the SDK, you can load the Zixflow SDK in your node js application by importing the Zigflow class
-> const Zixflow = require("zixflow").default;
+After you install the SDK, If you are using **CommonJS** you can load the Zixflow SDK in your node js application by following the below steps
+```js
+const Zixflow = require("zixflow").default;
+const zixflow = new Zixflow("Your_Zixflow_api_key");
+```
+
+If you are using **ES6 Modules** , follow these steps.
+```js
+import ZixflowEntity from 'zixflow';
+const Zixflow = ZixflowEntity.default;
+const zixflow = new Zixflow("Your_Zixflow_api_key");
+```
 
 ---
 
@@ -69,13 +79,12 @@ To hold this information, we recommend you create an environment variable with <
 
 > ZIXFLOW_API_KEY=your_zixflow_api_key
 
-<mark>**Alternatively if you prefer you can set your credentials directly in code (NOT RECOMMENDED)**</mark>
 
- <mark>**We do not recommend hard coding your Zixflow credentials in your scripts. Hard coding credentials poses a risk of exposing your api key.Add it to .env file and access the key like below**</mark>
 
-> <mark>const ZixFlow = require("zixflow").default;</mark>
+ <mark>**We do not recommend hard coding your Zixflow credentials in your scripts. Hard coding credentials poses a risk of exposing your api key.**</mark>
+
 >
-> <mark>**const zixflow = new Zixflow( process.env.ZIXFLOW_API_KEY )**</mark>
+> <mark>**const zixflow = new Zixflow(process.env.ZIXFLOW_API_KEY)**</mark>
  
 ---
 
@@ -83,7 +92,7 @@ To hold this information, we recommend you create an environment variable with <
 
 The Zixflow SDK for node js provides access to services that it supports through a collection of service instances. Each supported Zixflow service offer low-level APIs for using service features and resources.
 
-The services exposed through the SDK for node js follow the request-response pattern to exchange messages with calling applications. In this pattern, the code invoking a service submits an HTTP/HTTPS request to an endpoint for the service. The request contains parameters needed to successfully invoke the specific feature being called. The service that is invoked generates a response that is sent back to the requestor. The response contains data if the operation was successful or error information if the operation was unsuccessful.
+The services exposed through the SDK for node js follow the request-response pattern to exchange messages with calling applications. In this pattern, the code invoking a service submits an HTTPS request to an endpoint for the service. The request contains parameters needed to successfully invoke the specific feature being called. The service that is invoked generates a response that is sent back to the requestor. The response contains data if the operation was successful or error information if the operation was unsuccessful.
 
 
 
@@ -105,10 +114,17 @@ When using the SDK for node js, you need to add the SDK package to your applicat
 # Accessing Zixflow Services 
 
 Import the SDK for node js as shown below . This includes the entire SDK into your code.
+```js
+//For **CommonJs**
+const Zixflow = require("zixflow").default;
+```
+```js
+//For **ES6**
+import ZixflowEntity from 'zixflow';
+const Zixflow = ZixflowEntity.default;
+```
 
-> const Zixflow = require("zixflow").default;
-
-Begin by creating an instance of the Sainofirst SDK and assign it to a variable.
+Begin by creating an instance of the Zixflow SDK and assign it to a variable.
 
 > const zixflow = new Zixflow( process.env.ZIXFLOW_API_KEY )
 
@@ -171,15 +187,15 @@ You can easily send text message by calling the <strong>sendSMS method</strong> 
 
 |option|required/optional|type|description|
 |:---:|:---:|:---:|:---:|
-| senderid  | `required` | string |(Required) The registered and approved Sender name. |
-| route | `required` | string |(Required) Type of connectivity ex Global, Promotional, Transactional, etc. |
-| number | `required` | string |(Required) The phone number with a country prefix to which the message will be sent. |
-| message| `required` | string |(Required)The content of the message that you want to send.      |
-| isFlash  |  `OPTIONAL`   |  boolean   |(Optional) Set this parameter to true if you want to send a flash SMS via the API; otherwise, set it to false.        |
-|dltTemplateId |  `OPTIONAL` |string |(Optional) Only applicable for India. If you want to pass a template ID directly via the API, you can do so with this parameter.         |
-|dltEntityId|`OPTIONAL`| string |(Optional) Only applicable for India. If you want to pass an entity ID directly via the API, you can do so with this parameter.         |
-|reportURL|`OPTIONAL`|string|(Optional) Specify the URL where the user’s report and deliveries should be delivered.         |
-|submissionStatus     |`OPTIONAL`      |boolean     |(Optional) When a user wants to wait for submission status from the API, they must set this key to true. It is false by default.|
+| senderid  | `REQUIRED` | string | The registered and approved Sender name. |
+| route | `REQUIRED` | string | Type of connectivity ex Global, Promotional, Transactional, etc. |
+| number | `REQUIRED` | string |The phone number with a country prefix to which the message will be sent. |
+| message| `REQUIRED` | string |The content of the message that you want to send.      |
+| isFlash  |  `OPTIONAL`   |  boolean   | Set this parameter to true if you want to send a flash SMS via the API; otherwise, set it to false.        |
+|dltTemplateId |  `OPTIONAL` |string | Only applicable for India. If you want to pass a template ID directly via the API, you can do so with this parameter.         |
+|dltEntityId|`OPTIONAL`| string | Only applicable for India. If you want to pass an entity ID directly via the API, you can do so with this parameter.         |
+|reportURL|`OPTIONAL`|string| Specify the URL where the user’s report and deliveries should be delivered.         |
+|submissionStatus     |`OPTIONAL`      |boolean     | When a user wants to wait for submission status from the API, they must set this key to true. It is false by default.|
 
 
 ```js
@@ -227,7 +243,7 @@ If you want to choose type of connectivity for the message , such as promotional
 |isFlash|boolean| send flash Sms by setting this to true 
 
  If you want to send a flash SMS via the API , set **isFlash** to **true**  .  It is false by default.
- ```ruby
+ ```js
  const data = {
         isFlash: true; 
         ...
@@ -244,13 +260,12 @@ If you want to choose type of connectivity for the message , such as promotional
 |:----:|:----:|:----:|
 |submissionStatus|boolean| User can get submission status by setting this to true 
 
-  ```ruby
+  ```js
  const data = {
         submissionStatus: true; 
         ...
     }
-    //Change the code snippet here , call as per index.ts
-    zixflow.sms.sendSMS(data)
+
 ```
 ---
 # Email Service
@@ -287,15 +302,15 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 
 |option|required/optional|type|description|
 |:---:|:---:|:---:|:---:|
-| to  | `required` | array |(Required) This is to contain email ids where you need to send emails. you can add multiple email ids where you need to send emails. Max 10 emails at one api. |
-| subject | `required` | string |(Required) This contains email subject |
-| from | `required` | string |(Required) This is a from email id. You can assign only verified email id. You can verify from email id from zixflow dashboard by below-specified section. dashboard - campaign -> settings -> email -> domain |
-| fromName| `required` | string |(Required) Display name for from email address |
-| bodyHtml  |  `required`   |  boolean   |(Optional) This field used to send html content in email either bodyHtml or bodyText is required.        |
-|bodyText |  `required` |string |(Optional) This field used to send normal text content in email either bodyHtml or bodyText is required.         |
-|trackClicks|`OPTIONAL`| boolean |(Optional) Should the click be tracked? If no value has been provided, Account’s default setting will be used.         |
-|trackOpens|`OPTIONAL`|boolean|(Optional) Should the opens be tracked? If no value has been provided, Account’s default setting will be used.         |
-|replyToEmail|`OPTIONAL`      |string     |(Optional) Email address to reply to.|
+| to  | `REQUIRED` | array |This is to contain email ids where you need to send emails. you can add multiple email ids where you need to send emails. Max 10 emails at one api. |
+| subject | `REQUIRED` | string | This contains email subject |
+| from | `REQUIRED` | string |This is a from email id. You can assign only verified email id. You can verify from email id from zixflow dashboard by below-specified section. dashboard - campaign -> settings -> email -> domain |
+| fromName| `REQUIRED` | string |Display name for from email address |
+| bodyHtml  |  `REQUIRED`   |  boolean   |This field used to send html content in email either bodyHtml or bodyText is required.        |
+|bodyText |  `REQUIRED` |string | This field used to send normal text content in email either bodyHtml or bodyText is required.         |
+|trackClicks|`OPTIONAL`| boolean |Should the click be tracked? If no value has been provided, Account’s default setting will be used.         |
+|trackOpens|`OPTIONAL`|boolean| Should the opens be tracked? If no value has been provided, Account’s default setting will be used.         |
+|replyToEmail|`OPTIONAL`      |string     |Email address to reply to.|
 |replyToName | `OPTIONAL`    | string          |Name to use when replying to the email.       |
 |attachments  | `OPTIONAL`   | array     | An array of ID’s of attachments. Note: you can get attachment id from uploading attachment by upload attachment API      |
 
@@ -378,14 +393,14 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 
 |option|required/optional|type|description|
 |:---:|:---:|:---:|:---:|
-| to  | `required` | string |(Required) Specifies the recipient’s phone number in international format (e.g., “1xxxxxxxxxx”). |
-| phoneId | `required` | string |(Required) This is the unique identifier associated with the sender’s phone number given by WhatsApp. |
-| templateName | `required` | string |(Required) Refers to the name of the template to be used for the WhatsApp message. In this case, it is set to “hello_world.” You can obtain it from the template list screen. |
-| language| `required` | string |(Required) Specifies the language of the message, with “en_US” representing American English. You can get it from the template list screen. |
-| variables  |  `required`   |  object   |(Required) Custom variables used for the template. Please provide a JSON object with the required data.        |
-|source |  `API` |string |(Default) If the “linkWithRecord” is set to true, the source from which the WhatsApp message is sent should be mentioned; otherwise, it defaults to API.         |
-|linkWithRecord|`OPTIONAL`| boolean |(Optional) Specify whether to associate the current message with a record and display it in the inbox. Set it to “true” for linking with a record; otherwise, it defaults to “false.”         |
-|submissionStatus|`OPTIONAL`|boolean|(Optional) Indicates whether to wait for the submission status. Set it to “true” if you want to wait for the submission status; otherwise, it defaults to “false.”         |
+| to  | `REQUIRED` | string | Specifies the recipient’s phone number in international format (e.g., “1xxxxxxxxxx”). |
+| phoneId | `REQUIRED` | string |(Required) This is the unique identifier associated with the sender’s phone number given by WhatsApp. |
+| templateName | `REQUIRED` | string | Refers to the name of the template to be used for the WhatsApp message. In this case, it is set to “hello_world.” You can obtain it from the template list screen. |
+| language| `REQUIRED` | string | Specifies the language of the message, with “en_US” representing American English. You can get it from the template list screen. |
+| variables  |  `REQUIRED`   |  object   | Custom variables used for the template. Please provide a JSON object with the required data.        |
+|source |  `API` |string | If the “linkWithRecord” is set to true, the source from which the WhatsApp message is sent should be mentioned; otherwise, it defaults to API.         |
+|linkWithRecord|`OPTIONAL`| boolean | Specify whether to associate the current message with a record and display it in the inbox. Set it to “true” for linking with a record; otherwise, it defaults to “false.”         |
+|submissionStatus|`OPTIONAL`|boolean| Indicates whether to wait for the submission status. Set it to “true” if you want to wait for the submission status; otherwise, it defaults to “false.”         |
 
 ```js
 
@@ -399,7 +414,7 @@ Create an instance of the service and assign it to a variable. Make sure you hav
           "templateName": "marketing_sample_2",
           "language": "en",
           "variables": {
-            "video": "http://techslides.com/demos/sample-videos/small.mp4"
+            "video": "https://techslides.com/demos/sample-videos/small.mp4"
           },
           "submissionStatus": true
         });

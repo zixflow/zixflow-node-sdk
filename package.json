@@ -1,6 +1,6 @@
 {
   "name": "zixflow",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Zixflow Node SDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -12,9 +12,14 @@
     "type": "git",
     "url": "git+https://github.com/zixflow/zixflow-node-sdk.git"
   },
-  "files": ["lib/**/*"],
-  "keywords": ["Zixflow" , "Node-SDK"],
-  "author": "Apoorva Jakati",
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [
+    "Zixflow",
+    "Node-SDK"
+  ],
+  "author": "Zixflow",
   "license": "ISC",
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -24,6 +29,7 @@
     "@types/node": "^20.12.7",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.6",
+    "dotenv": "^16.4.5",
     "jest": "^29.7.0",
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
@@ -36,7 +42,6 @@
   "dependencies": {
     "axios": "^1.6.8",
     "body-parser": "^1.20.2",
-    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "libphonenumber-js": "^1.10.61",
     "nodemon": "^3.1.0",

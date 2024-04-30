@@ -10,13 +10,6 @@ export interface SMSDataInterface {
   submissionStatus: boolean;
 }
 
-export interface SuccessResponse {
-  status: boolean;
-  message: string;
-  messageId?: string;
-  campaignId?: string;
-}
-
 export interface EmailDataInterface {
   to: Array<string>;
   subject: string;
@@ -32,12 +25,6 @@ export interface EmailDataInterface {
   callbackUrl: string;
 }
 
-export interface EmailSuccessResponse {
-  status: boolean;
-  message: string;
-  campaignId?: string;
-  messageIds?: Array<{}>;
-}
 
 export interface WhatsAppDataInterface {
   to: string;
@@ -50,11 +37,19 @@ export interface WhatsAppDataInterface {
   submissionStatus: boolean;
 }
 
-export interface WhatsappSuccessResponse {
+interface ServerResponse {
   status: boolean;
   message: string;
-  campaignId?: string;
   messageId?: string;
+  campaignId?: string;
+}
+
+export interface SuccessResponse extends ServerResponse {
+  status: true; 
+}
+
+export interface ErrorResponse extends ServerResponse {
+  status: false; 
 }
 
 export interface DataErrorInterface {
