@@ -2,7 +2,7 @@ import { WhatsAppDataInterface, DataErrorInterface } from '../interfaces/rootInt
 import validatePhoneWithCode from './validatePhoneNumber';
 import errors from '../errors.json';
 
-export default function validateWhatsappData(data: WhatsAppDataInterface): DataErrorInterface {
+export default function validateWhatsAppData(data: WhatsAppDataInterface): DataErrorInterface {
   let error: DataErrorInterface = {
     status: false,
     message: '',

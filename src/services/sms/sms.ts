@@ -34,8 +34,7 @@ export default class SMS {
       await axiosWrapper(config)
         .then((response) => {
           if (response) {
-            const responseObject = { status: response.status, message: response.message };
-            resolve(responseObject);
+            resolve(response);
           }
         })
         .catch((error) => {

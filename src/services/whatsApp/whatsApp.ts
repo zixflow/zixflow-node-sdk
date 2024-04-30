@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import { WhatsAppDataInterface, SuccessResponse , ErrorResponse } from '../../interfaces/rootInterfaces';
-import validateWhatsappData from '../../utilities/validateWhatsAppData';
+import validateWhatsAppData from '../../utilities/validateWhatsAppData';
 import { POST_WHATSAPP_API_URL } from '../../constants';
 import createAxiosConfig from '../../utilities/axiosConfig';
 import axiosWrapper from '../../utilities/axiosRequestWrapper';
@@ -16,7 +16,7 @@ export default class WhatsApp {
 
   async sendWhatsAppTemplate(whatsAppData: WhatsAppDataInterface): Promise<SuccessResponse | ErrorResponse> {
     return new Promise<SuccessResponse | ErrorResponse>(async (resolve, reject) => {
-      const validationResult = validateWhatsappData(whatsAppData);
+      const validationResult = validateWhatsAppData(whatsAppData);
 
       if (validationResult.status === false) {
         const errorMessage = validationResult.message;

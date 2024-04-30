@@ -20,20 +20,20 @@ https://zixflow.com/
 5. [Accessing Individual Service](#accessing-individual-services)
       1) [Sms](#sms-service) 
       2) [Email](#email-service) 
-      3) [Whatsapp](#whatsapp-service) 
+      3) [WhatsApp](#whatsApp-service) 
 
 ---
 
 # Features
 
 
- > Our APIs are based around REST architecture 
- >
- >> - Our AI Engine enables maximum delivery with automated backup routing.
- >> - Our APIs use the basic HTTPS request codes: POST, GET, PATCH, DELETE.
- >> - You can import and test all our full API collection in the Postman app by clicking on the ’ Run in Postman’ button.
- >
- > Note:  Any requests made using the valid API credentials will affect the real-time data in your zixflow account &excl;
+  Our APIs are based around REST architecture 
+ 
+  - Our AI Engine enables maximum delivery with automated backup routing.
+  - Our APIs use the basic HTTPS request codes: POST, GET, PATCH, DELETE.
+  - You can import and test all our full API collection in the Postman app by clicking on the ’ Run in Postman’ button.
+ 
+ Note:  Any requests made using the valid API credentials will affect the real-time data in your zixflow account &excl;
 
 
 
@@ -44,12 +44,14 @@ https://zixflow.com/
 The preferred way to install the Zixflow SDK for node js is to use the npm package manager for node js.<br>
 
 Go to your node js project root directory.
-
-> cd your_project_directory
+```js
+cd your_project_directory
+```
 
 Then simply type the following into a terminal window
-
-> npm install zixflow 
+```js
+ npm install zixflow 
+```
 
 
 This will install the Zixflow SDK into your node js project.
@@ -76,15 +78,17 @@ const zixflow = new Zixflow("Your_Zixflow_api_key");
 You need to provide credentials to Zixflow SDK so that only your account and its resources are accessed by the SDK. For more information about obtaining your account credentials, see [Getting Your Credentials](https://zixflow.com/).
 
 To hold this information, we recommend you create an environment variable with <strong>ZIXFLOW_API_KEY</strong> as it's key and it's value should hold your <strong>zixflow api key</strong>. 
-
-> ZIXFLOW_API_KEY=your_zixflow_api_key
+```js
+ ZIXFLOW_API_KEY=your_zixflow_api_key
+ ```
 
 
 
  <mark>**We do not recommend hard coding your Zixflow credentials in your scripts. Hard coding credentials poses a risk of exposing your api key.**</mark>
 
->
-> <mark>**const zixflow = new Zixflow(process.env.ZIXFLOW_API_KEY)**</mark>
+```js
+ const zixflow = new Zixflow(process.env.ZIXFLOW_API_KEY)
+ ```
  
 ---
 
@@ -99,7 +103,7 @@ The services exposed through the SDK for node js follow the request-response pat
 The current services available under this version of SDK are mentioned below 
 - SMS
 - Email
-- Whatsapp
+- WhatsApp
 
 When using the SDK for node js, you need to add the SDK package to your application using require, which provides support for all current services.
 
@@ -125,19 +129,20 @@ const Zixflow = ZixflowEntity.default;
 ```
 
 Begin by creating an instance of the Zixflow SDK and assign it to a variable.
-
-> const zixflow = new Zixflow( process.env.ZIXFLOW_API_KEY )
+```js
+ const zixflow = new Zixflow( process.env.ZIXFLOW_API_KEY )
+ ```
 
 To access service features through the Zixflow class, you first access a service through which you need access to a set of features provided by the underlying service instance. Generally there is one service instance provided for each service.
 
-Consider the following code , this is used to access class of Sms service , Email service and Whatsapp service respectively
+Consider the following code , this is used to access class of Sms service , Email service and WhatsApp service respectively
+```js
+ const sms = zixflow.sms
 
-> const sms = zixflow.sms
->
-> const email = zixflow.email
->
-> const whatsapp = zixflow.whatsapp
+ const email = zixflow.email
 
+ const whatsApp = zixflow.whatsApp
+```
 ---
 
 # Accessing Individual Services
@@ -183,24 +188,28 @@ Zixflow sms service provides easy api for sending and scheduling text messages w
 ## Using sms service
 
 Begin by loading Zixflow SDK into your node js project.
-
-> const Zixflow = require("zixflow").default;
+```js
+const Zixflow = require("zixflow").default;
+```
 
 Create a new instance of Zixflow SDK. Make sure you have configured your apikey in environment variable.
-
-> const zixflow = new Zixflow("Your Zixflow Api key")
-
+```js
+ const zixflow = new Zixflow("Your Zixflow Api key")
+```
 Access sms service from the SDK.
-
-> const sms = zixflow.sms
+```js
+ const sms = zixflow.sms
+ ```
 
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
-
-> const Sms = require("zixflow/lib/services/sms").default
+```js
+ const Sms = require("zixflow/lib/services/sms").default
+```
 
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
-
-> const sms = new Sms("your_zixflow-api-key")
+```js
+ const sms = new Sms("your_zixflow-api-key")
+ ```
 
 ## Sending a text message
 
@@ -244,22 +253,33 @@ You can easily send text message by calling the <strong>sendSMS method</strong> 
 ```
 
 ## Response from server for SMS Service
+
+#### If ***submissionStatus*** is ***false*** and the SMS is sent successfully, you will receive the success response.
+
 ```js
-     // 200-Success 
       { 
         "status": true,
-        "message": "SMS sent successfully"
+        "message": "SMS submitted successfully!"
       }
 ```
+#### If ***submissionStatus*** is ***true*** and the SMS is sent successfully, you will receive the success response.
 ```js
-      // 400-Bad Request
+      {
+        status: true,
+        message: 'SMS sent successfully!',
+        campaignId: '6630d7a878ac3484a277588a',
+        messageId: '6630d7a878ac3484a277588c'
+      }
+```
+#### If any of the required properties are missing in the request, you will receive the following error response, which might include the missing property value. 
+```js
       {
       "status": false,
       "message": "Invalid data Provided"
       }  
 ```
+#### If you provide an invalid api-key or fail to provide an API key, you will receive the following error as a response.
 ```js
-      // 401-Unauthorised
       {
       "status": false,
       "message": "Unauthorised"
@@ -276,7 +296,7 @@ If you want to choose type of connectivity for the message , such as promotional
 |:----:|:----:|:----:|
 |route|string| route can be promotional, transactional or OTP
 
-```ruby
+```js
     const data = {
         route: "transactional"; 
         ... ,
@@ -328,25 +348,26 @@ You can send marketing messages, newsletters, updates, coupons, and invitations 
 ## Using Email Service 
 
 Begin by loading *Zixflow* SDK into your node js project.
-
-> const ZixFlow = require("zixflow").default;
+```js
+const ZixFlow = require("zixflow").default;
+```
 
 Create a new instance of *Zixflow* SDK. Make sure you have configured your apikey in environment variable.
-
-> const zixflow = new ZixFlow("Your api key");
-
+```js
+const zixflow = new ZixFlow("Your api key");
+```
 Access email service from the SDK
-
-> const email = zixflow.email
-
+```js
+ const email = zixflow.email
+```
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
-
-> const Email = require("zixflow/lib/services/email").default;
-
+```js
+ const Email = require("zixflow/lib/services/email").default;
+```
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
-
-> const email = new Email("your_zixflow-api-key")
-
+```js
+ const email = new Email("your_zixflow-api-key")
+```
 ## <center>Required configuration options for email service
 
 |option|required/optional|type|description|
@@ -394,22 +415,23 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 ```
 
 ## Response from server for Email Service
-```js
-     // 200-Success 
+
+#### Upon successful delivery of the email, you will receive a success response..
+```js 
       { 
         "status": true,
         "message": "Email sent successfully!"
       }
 ```
+#### If any of the required properties are missing in the request, you will receive the following error response, which might include the missing property value.
 ```js
-      // 400-Bad Request
       {
       "status": false,
       "message": "to[1] must be a valid email"
       }  
 ```
+#### If you provide an invalid api-key or fail to provide an API key, you will receive the following error as a response.
 ```js
-      // 401-Unauthorised
       {
       "status": false,
       "message": "No token provided"
@@ -428,7 +450,7 @@ Purpose of API is whenever the user wants to send an attachment in the email. us
 [This syntax is used for hiding the content and not render]:#
 
 ---
-# Whatsapp Service
+# WhatsApp Service
 
 Zixflow provides a service named WhatsApp API. This API is used to send WhatsApp messages to end-users based on approved templates.
 
@@ -439,25 +461,25 @@ This API allows you to craft and deliver messages in compliance with WhatsApp’
 ## Using WhatsApp Service 
 
 Begin by loading *Zixflow* SDK into your node js project.
-
-> const ZixFlow = require("zixflow").default;
-
+```js
+ const ZixFlow = require("zixflow").default;
+```
 Create a new instance of *Zixflow* SDK. Make sure you have configured your apikey in environment variable.
-
-> const zixflow = new ZixFlow("Your api key");
-
+```js
+ const zixflow = new ZixFlow("Your api key");
+```
 Access whatsApp service from the SDK
-
-> const whatsApp = zixflow.whatsApp
-
+```js
+ const whatsApp = zixflow.whatsApp
+```
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
-
-> const WhatsApp = require("zixflow/lib/services/whatsApp").default
-
+```js
+ const WhatsApp = require("zixflow/lib/services/whatsApp").default
+```
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
-
-> const whatsApp = new WhatsApp("your_zixflow-api-key")
-
+```js
+ const whatsApp = new WhatsApp("your_zixflow-api-key")
+```
 ## <center>Required configuration options for whatsApp service
 
 |option|required/optional|type|description|
@@ -492,22 +514,22 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 ```
 
 ## Response from server for WhatsApp Service
+#### Upon successful delivery of the WhatsApp message, you will receive a success response.
 ```js
-     // 200-Success 
       { 
         "status": true,
         "message": "Message sent successfully"
       }
 ```
+#### If any of the required properties are missing in the request, you will receive the following error response, which might include the missing property value.
 ```js
-      // 400-Bad Request
       {
       "status": false,
       "message": "Invalid data Provided"
       }  
 ```
+#### If you provide an invalid api-key or fail to provide an API key, you will receive the following error as a response.
 ```js
-      // 401-Unauthorised
       {
       "status": false,
       "message": "Unauthorised"
