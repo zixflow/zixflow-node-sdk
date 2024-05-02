@@ -1,4 +1,4 @@
-# <span style="color:white">***Zixflow SDK***</span>
+# ***Zixflow SDK***
 
 
 The Zixflow SDK provides a node js API for Zixflow services. You can use this API to build libraries or applications for node js.
@@ -18,7 +18,7 @@ https://zixflow.com/
    - [Generate API key](#generate-api-key)
    - [All Services](#accessing-zixflow-services)
 5. [Accessing Individual Service](#accessing-individual-services)
-      1) [Sms](#sms-service) 
+      1) [SMS](#sms-service) 
       2) [Email](#email-service) 
       3) [WhatsApp](#whatsApp-service) 
 
@@ -105,7 +105,7 @@ The current services available under this version of SDK are mentioned below
 - Email
 - WhatsApp
 
-When using the SDK for node js, you need to add the SDK package to your application using require, which provides support for all current services.
+When you're working with the Node.js SDK, you just need to include the SDK package in your app using 'require' or ES6 imports. This way, you'll have support for all the services available.
 
 ---
 
@@ -130,12 +130,12 @@ const Zixflow = ZixflowEntity.default;
 
 Begin by creating an instance of the Zixflow SDK and assign it to a variable.
 ```js
- const zixflow = new Zixflow( process.env.ZIXFLOW_API_KEY )
+ const zixflow = new Zixflow(process.env.ZIXFLOW_API_KEY)
  ```
 
-To access service features through the Zixflow class, you first access a service through which you need access to a set of features provided by the underlying service instance. Generally there is one service instance provided for each service.
+To utilize service features via the Zixflow class, you start by accessing a service. This grants you access to a set of features offered by the service instance underneath. Typically, there's one service instance for each service.
 
-Consider the following code , this is used to access class of Sms service , Email service and WhatsApp service respectively
+The provided code allows for the independent access of classes associated with the SMS, Email, and WhatsApp services.
 ```js
  const sms = zixflow.sms
 
@@ -147,12 +147,12 @@ Consider the following code , this is used to access class of Sms service , Emai
 
 # Accessing Individual Services
 
-To access individual service begin by importing that service
+To access a specific service, start by importing that service.
 
 ```js
 //For **CommonJs**
-const Sms = require("zixflow/lib/services/sms/sms").default;
-const sms = new Sms(process.env.ZIXFLOW_API_KEY);
+const SMS = require("zixflow/lib/services/sms/sms").default;
+const sms = new SMS(process.env.ZIXFLOW_API_KEY);
 
 const Email = require("zixflow/lib/services/email/email").default;
 const email = new Email(process.env.ZIXFLOW_API_KEY);
@@ -162,9 +162,9 @@ const whatsApp = new WhatsApp(process.env.ZIXFLOW_API_KEY);
 ```
 ```js
 //For **ES6**
-import SmsClass from 'zixflow/lib/services/sms/sms.js';
-const Sms = SmsClass.default;
-const sms = new Sms(process.env.ZIXFLOW_API_KEY);
+import SMSClass from 'zixflow/lib/services/sms/sms.js';
+const SMS = SMSClass.default;
+const sms = new SMS(process.env.ZIXFLOW_API_KEY);
 
 import EmailClass from 'zixflow/lib/services/email/email.js';
 const Email = EmailClass.default;
@@ -179,60 +179,74 @@ const whatsApp = new WhatsApp(process.env.ZIXFLOW_API_KEY);
 
 
 ---
-# Sms Service
+# SMS Service
 
 Programmatically send high volumes of text messages globally. Your users can get OTP, alerts, stock prices, account balance, transaction statements, discounts, offers and much more all over a message.
 
-Zixflow sms service provides easy api for sending and scheduling text messages which you can easily integrate in your node js application.
+Zixflow SMS service provides easy api for sending and scheduling text messages which you can easily integrate in your node js application.
               
-## Using sms service
+## Using SMS service
 
-Begin by loading Zixflow SDK into your node js project.
+Start by integrating the Zixflow SDK into your Node.js project, using either CommonJS or ES6 imports.
 ```js
+//For **CommonJs**
 const Zixflow = require("zixflow").default;
+
+or 
+
+//For **ES6**
+import ZixflowClass from 'zixflow';
+const Zixflow = ZixflowClass.default;
 ```
 
 Create a new instance of Zixflow SDK. Make sure you have configured your apikey in environment variable.
 ```js
  const zixflow = new Zixflow("Your Zixflow Api key")
 ```
-Access sms service from the SDK.
+Access SMS service from the SDK.
 ```js
  const sms = zixflow.sms
  ```
 
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 ```js
- const Sms = require("zixflow/lib/services/sms").default
+ //For **CommonJs**
+ const SMS = require("zixflow/lib/services/sms/sms").default;
+
+ or 
+
+ //For **ES6**
+ import SMSClass from 'zixflow/lib/services/sms/sms.js';
+ const SMS = SMSClass.default
 ```
 
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
 ```js
- const sms = new Sms("your_zixflow-api-key")
+ const sms = new SMS("your_zixflow-api-key")
  ```
 
 ## Sending a text message
 
-You can easily send text message by calling the <strong>sendSMS method</strong> from sms class. Pass the data object in the following format
+You can easily send text message by calling the <strong>sendSMS method</strong> from SMS class. Pass the data object in the following format
 
-## <center>Required configuration options for sms service
+## <center>Required configuration options for SMS service
 
 
 |option|required/optional|type|description|
 |:---:|:---:|:---:|:---:|
 | senderid  | `REQUIRED` | string | The registered and approved Sender name. |
-| route | `REQUIRED` | string | Type of connectivity ex Global, Promotional, Transactional, etc. |
+| route | `REQUIRED` | string | Type of connectivity for the message, such as promotional, transactional, or OTP. |
 | number | `REQUIRED` | string |The phone number with a country prefix to which the message will be sent. |
 | message| `REQUIRED` | string |The content of the message that you want to send.      |
 | isFlash  |  `OPTIONAL`   |  boolean   | Set this parameter to true if you want to send a flash SMS via the API; otherwise, set it to false.        |
 |dltTemplateId |  `OPTIONAL` |string | Only applicable for India. If you want to pass a template ID directly via the API, you can do so with this parameter.         |
 |dltEntityId|`OPTIONAL`| string | Only applicable for India. If you want to pass an entity ID directly via the API, you can do so with this parameter.         |
 |reportURL|`OPTIONAL`|string| Specify the URL where the user’s report and deliveries should be delivered.         |
-|submissionStatus     |`OPTIONAL`      |boolean     | When a user wants to wait for submission status from the API, they must set this key to true. It is false by default.|
+|submissionStatus     |`OPTIONAL`      |boolean     | Users must set this key to true if they want to receive submission status from the API; otherwise, it remains false by default.|
 
 
 ```js
-
+    
     const ZixFlow = require('zixflow').default;
     
     const zixflow = new ZixFlow("your_zixflow_api_token")
@@ -254,7 +268,7 @@ You can easily send text message by calling the <strong>sendSMS method</strong> 
 
 ## Response from server for SMS Service
 
-#### If ***submissionStatus*** is ***false*** and the SMS is sent successfully, you will receive the success response.
+#### Upon successful delivery of the message, you will receive a success response..
 
 ```js
       { 
@@ -262,15 +276,7 @@ You can easily send text message by calling the <strong>sendSMS method</strong> 
         "message": "SMS submitted successfully!"
       }
 ```
-#### If ***submissionStatus*** is ***true*** and the SMS is sent successfully, you will receive the success response.
-```js
-      {
-        status: true,
-        message: 'SMS sent successfully!',
-        campaignId: '6630d7a878ac3484a277588a',
-        messageId: '6630d7a878ac3484a277588c'
-      }
-```
+
 #### If any of the required properties are missing in the request, you will receive the following error response, which might include the missing property value. 
 ```js
       {
@@ -305,11 +311,11 @@ If you want to choose type of connectivity for the message , such as promotional
     zixflow.sms.sendSMS(data)
 ```
 
-## Sending a text message along with flash Sms
+## Sending a text message along with flash SMS
 
 |option|type |description|
 |:----:|:----:|:----:|
-|isFlash|boolean| send flash Sms by setting this to true 
+|isFlash|boolean| send flash SMS by setting this to true 
 
  If you want to send a flash SMS via the API , set **isFlash** to **true**  .  It is false by default.
  ```js
@@ -321,7 +327,7 @@ If you want to choose type of connectivity for the message , such as promotional
     zixflow.sms.sendSMS(data)
 ```
 
-## User gets  message Submission Status
+## User gets Submission Status from API
 
  If user wants to wait for submission status from the API they must set **submissionStatus** key to **true**. It is false by default.
 
@@ -336,12 +342,31 @@ If you want to choose type of connectivity for the message , such as promotional
     }
 
 ```
+
+
+#### If ***submissionStatus*** is ***true*** and the SMS is sent successfully, you will receive the success response.
+```js
+      {
+        status: true,
+        message: 'SMS sent successfully!',
+        campaignId: '6630d7a878ac3484a277588a',
+        messageId: '6630d7a878ac3484a277588c'
+      }
+```
+#### If ***submissionStatus*** is ***false*** and the SMS is sent successfully, you will receive the success response.
+```js
+      { 
+        "status": true,
+        "message": "SMS submitted successfully!"
+      }
+```
+
 ---
 # Email Service
 
-Zixflow provides a service named Email API. An email API service allows you to send emails to large lists of multiple recipients by incorporating email into your applications.
+Zixflow provides a service named Email API. This service allows you to send emails to large lists of multiple recipients by incorporating email into your applications.
 
-Our email API allows you to send emails to users around the globe through simple RESTful APIs. You can send one email to many people, or a unique email to each person on your list with an email API service.
+Our Email API allows you to send emails to users around the globe through simple RESTful APIs. You can send one email to many people, or a unique email to each person on your list with an email API service.
 
 You can send marketing messages, newsletters, updates, coupons, and invitations through email API.
 
@@ -349,7 +374,15 @@ You can send marketing messages, newsletters, updates, coupons, and invitations 
 
 Begin by loading *Zixflow* SDK into your node js project.
 ```js
-const ZixFlow = require("zixflow").default;
+
+//For **CommonJs**
+const  Zixflow  =  require("zixflow").default;
+
+                    or
+
+//For **ES6**
+import  ZixflowClass  from  'zixflow';
+const  Zixflow  =  ZixflowClass.default;
 ```
 
 Create a new instance of *Zixflow* SDK. Make sure you have configured your apikey in environment variable.
@@ -362,7 +395,7 @@ Access email service from the SDK
 ```
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 ```js
- const Email = require("zixflow/lib/services/email").default;
+ const Email = require("zixflow/lib/services/email/email").default;
 ```
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
 ```js
@@ -372,9 +405,9 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 
 |option|required/optional|type|description|
 |:---:|:---:|:---:|:---:|
-| to  | `REQUIRED` | array |This is to contain email ids where you need to send emails. you can add multiple email ids where you need to send emails. Max 10 emails at one api. |
+| to  | `REQUIRED` | array |This is to contain email ids where you need to send emails.You can add multiple email ids where you need to send emails. Max 10 emails at one api. |
 | subject | `REQUIRED` | string | This contains email subject |
-| from | `REQUIRED` | string |This is a from email id. You can assign only verified email id. You can verify from email id from zixflow dashboard by below-specified section. dashboard - campaign -> settings -> email -> domain |
+| from | `REQUIRED` | string |This is a from email id. You can assign only verified email id. You can verify from email id from zixflow dashboard by below-specified section. dashboard -> campaign -> settings -> email -> domain |
 | fromName| `REQUIRED` | string |Display name for from email address |
 | bodyHtml  |  `REQUIRED`   |  boolean   |This field used to send html content in email either bodyHtml or bodyText is required.        |
 |bodyText |  `REQUIRED` |string | This field used to send normal text content in email either bodyHtml or bodyText is required.         |
@@ -383,6 +416,7 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 |replyToEmail|`OPTIONAL`      |string     |Email address to reply to.|
 |replyToName | `OPTIONAL`    | string          |Name to use when replying to the email.       |
 |attachments  | `OPTIONAL`   | array     | An array of ID’s of attachments. Note: you can get attachment id from uploading attachment by upload attachment API      |
+| callbackUrl | `OPTIONAL` | string | Call back where you received notifications related to email.|
 
 
 ```js
@@ -391,7 +425,7 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 
   const zixflow = new ZixFlow("your_zixflow_api_token")
 
-  const emailData = {
+  const data = {
     "to": [
       "sample@gmail.com"
     ],
@@ -410,7 +444,7 @@ Create an instance of the service and assign it to a variable. Make sure you hav
     "callbackUrl": "https://webhook.site/0a276bc5-f0e4-4235-9006-b58b7d224ad5"
   };
 
-  zixflow.email.sendEmail(emailData)
+  zixflow.email.sendEmail(data)
 
 ```
 
@@ -438,17 +472,6 @@ Create an instance of the service and assign it to a variable. Make sure you hav
       }
 ```
 
-## <center><ins>Upload Email Attachment</ins></center>
-
-Purpose of API is whenever the user wants to send an attachment in the email. user need to upload attachment in *Zixflow* platform first. Zixflow will provide id represents to attachment. and the user can send this id in send email API's attachment field to send attachment along with the email.
-
-|option| required/optional |type |description|
-|:----:|:----: |:----:|:----:|
-|file|`REQUIRED`| form-data | binary file data|
-
-
-[This syntax is used for hiding the content and not render]:#
-
 ---
 # WhatsApp Service
 
@@ -474,7 +497,7 @@ Access whatsApp service from the SDK
 ```
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 ```js
- const WhatsApp = require("zixflow/lib/services/whatsApp").default
+const WhatsApp = require("zixflow/lib/services/whatsApp/whatsApp").default;
 ```
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
 ```js
@@ -484,14 +507,14 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 
 |option|required/optional|type|description|
 |:---:|:---:|:---:|:---:|
-| to  | `REQUIRED` | string | Specifies the recipient’s phone number in international format (e.g., “1xxxxxxxxxx”). |
-| phoneId | `REQUIRED` | string |(Required) This is the unique identifier associated with the sender’s phone number given by WhatsApp. |
+| to  | `REQUIRED` | string | Specifies the recipient’s phone number in international format (e.g., “1xxxxxxxxxxx”). |
+| phoneId | `REQUIRED` | string | This is the unique identifier associated with the sender’s phone number given by WhatsApp. |
 | templateName | `REQUIRED` | string | Refers to the name of the template to be used for the WhatsApp message. In this case, it is set to “hello_world.” You can obtain it from the template list screen. |
 | language| `REQUIRED` | string | Specifies the language of the message, with “en_US” representing American English. You can get it from the template list screen. |
 | variables  |  `REQUIRED`   |  object   | Custom variables used for the template. Please provide a JSON object with the required data.        |
 |source |  `API` |string | If the “linkWithRecord” is set to true, the source from which the WhatsApp message is sent should be mentioned; otherwise, it defaults to API.         |
 |linkWithRecord|`OPTIONAL`| boolean | Specify whether to associate the current message with a record and display it in the inbox. Set it to “true” for linking with a record; otherwise, it defaults to “false.”         |
-|submissionStatus|`OPTIONAL`|boolean| Indicates whether to wait for the submission status. Set it to “true” if you want to wait for the submission status; otherwise, it defaults to “false.”         |
+|submissionStatus|`OPTIONAL`|boolean| Users must set this key to true if they want to receive submission status from the API; otherwise, it remains false by default”         |
 
 ```js
     
@@ -518,7 +541,7 @@ Create an instance of the service and assign it to a variable. Make sure you hav
 ```js
       { 
         "status": true,
-        "message": "Message sent successfully"
+        "message": "SMS submitted successfully!"
       }
 ```
 #### If any of the required properties are missing in the request, you will receive the following error response, which might include the missing property value.
@@ -535,6 +558,42 @@ Create an instance of the service and assign it to a variable. Make sure you hav
       "message": "Unauthorised"
       }
 ```
+
+## User gets Submission Status from API
+
+ If user wants to wait for submission status from the API they must set **submissionStatus** key to **true**. It is false by default.
+
+ |option|type |description|
+|:----:|:----:|:----:|
+|submissionStatus|boolean| User can get submission status by setting this to true 
+
+  ```js
+ const data = {
+        submissionStatus: true; 
+        ...
+    }
+
+```
+
+
+#### If ***submissionStatus*** is ***true*** and the WhatsApp message is sent successfully, you will receive the success response.
+```js
+      {
+        status: true,
+        message: 'WhatsApp sent successfully!',
+        campaignId: '6631b22978ac3484a283e17a',
+        messageId: '6631b22978ac3484a283e17c'
+      }
+```
+#### If ***submissionStatus*** is ***false*** and the WhatsApp message is sent successfully, you will receive the success response.
+```js
+      { 
+        "status": true,
+        "message": "SMS submitted successfully!"
+      }
+```
+
+---
 
 
 

@@ -12,5 +12,7 @@ readmetest.md
 tsconfig.json
 tslint.json
 .prettierrc
+typedoc.json
+docs/
 
 .DS_Store
