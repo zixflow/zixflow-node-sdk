@@ -11,7 +11,7 @@ import { AxiosRequestConfig } from 'axios';
  * @property {string} __apiKey - The Zixflow API key used for authentication.
  * @property {string} domain - The base domain URL for Zixflow API requests.
  */
-export default class SMS {
+class SMS {
   /**
    * @summary The Zixflow API key.
    * @type {string}
@@ -108,3 +108,5 @@ export default class SMS {
     });
   }
 }
+
+export = SMS;

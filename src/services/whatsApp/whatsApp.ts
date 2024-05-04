@@ -11,7 +11,7 @@ import axiosWrapper from '../../utilities/axiosRequestWrapper';
  * @property {string} __apiKey - The Zixflow API key used for authentication.
  * @property {string} domain - The base domain URL for Zixflow API requests.
  */
-export default class WhatsApp {
+class WhatsApp {
   /**
    * @summary The Zixflow API key.
    * @type {string}
@@ -106,3 +106,5 @@ export default class WhatsApp {
     });
   }
 }
+
+export = WhatsApp;
