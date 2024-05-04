@@ -2,8 +2,8 @@ import errors from '../errors.json';
 import isEmail from 'validator/lib/isEmail';
 import { DataErrorInterface } from '../interfaces/rootInterfaces';
 
-export default function emailValidator(emails): DataErrorInterface {
-  let invalidEmails = [];
+export default function emailValidator(emails: string[]): DataErrorInterface {
+  const invalidEmails: string[] = [];
 
   if (emails.length === 0 || emails[0] === '') {
     return {
@@ -11,7 +11,7 @@ export default function emailValidator(emails): DataErrorInterface {
       message: errors.E008,
     };
   } else {
-    emails.forEach((email) => {
+    emails.forEach((email: string) => {
       const res = isEmail(email);
       if (!res) {
         invalidEmails.push(email);

@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const axiosWrapper = (axiosConfig: AxiosRequestConfig) =>
-  new Promise<any>((resolve, reject) =>
+  new Promise<any>((resolve) =>
     axios(axiosConfig)
       .then((response) => resolve(response.data))
       .catch((err) => {

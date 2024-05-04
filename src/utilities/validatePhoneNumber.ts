@@ -1,4 +1,4 @@
-import { parsePhoneNumber, parsePhoneNumberFromString } from 'libphonenumber-js';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import errors from '../errors.json';
 import { DataErrorInterface } from '../interfaces/rootInterfaces';
 

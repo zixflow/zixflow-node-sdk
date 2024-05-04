@@ -3,32 +3,17 @@ import validatePhoneWithCode from './validatePhoneNumber';
 import errors from '../errors.json';
 
 export default function validateWhatsAppData(data: WhatsAppDataInterface): DataErrorInterface {
-  let error: DataErrorInterface = {
-    status: false,
-    message: '',
+  let message = '';
+  if (!data.phoneId) message = errors.E013;
+  else if (!data.templateName) message = errors.E014;
+  else if (!data.language) message = errors.E015;
+  else if (data.to !== undefined || data.to !== '') {
+    const result: DataErrorInterface = validatePhoneWithCode(data.to);
+    message = !result.status ? result.message : '';
+  } else message = '';
+
+  return {
+    status: message === '' ? true : false,
+    message: message === '' ? 'All values are valid' : message,
   };
-
-  switch (true) {
-    case !data.phoneId:
-      error.message = errors.E013;
-      break;
-
-    case !data.templateName:
-      error.message = errors.E014;
-      break;
-
-    case !data.language:
-      error.message = errors.E015;
-      break;
-
-    case data.to !== undefined || data.to !== '':
-      const result: DataErrorInterface = validatePhoneWithCode(data.to);
-      return result;
-
-    default:
-      error.status = true;
-      error.message = 'All values are valid';
-  }
-
-  return error;
 }

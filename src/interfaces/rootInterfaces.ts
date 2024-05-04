@@ -25,13 +25,12 @@ export interface EmailDataInterface {
   callbackUrl: string;
 }
 
-
 export interface WhatsAppDataInterface {
   to: string;
   phoneId: string;
   templateName: string;
   language: string;
-  variables: Object;
+  variables: object;
   source: string;
   linkWithRecord: boolean;
   submissionStatus: boolean;
@@ -45,11 +44,11 @@ interface ServerResponse {
 }
 
 export interface SuccessResponse extends ServerResponse {
-  status: true; 
+  status: true;
 }
 
 export interface ErrorResponse extends ServerResponse {
-  status: false; 
+  status: false;
 }
 
 export interface DataErrorInterface {
