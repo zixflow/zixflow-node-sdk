@@ -149,27 +149,24 @@ To access a specific service, start by importing that service.
 
 ```js
 //For **CommonJs**
-const SMS = require("zixflow/lib/services/sms/sms").default;
+const SMS = require("zixflow/lib/services/sms/sms");
 const sms = new SMS(process.env.ZIXFLOW_API_KEY);
 
-const Email = require("zixflow/lib/services/email/email").default;
+const Email = require("zixflow/lib/services/email/email");
 const email = new Email(process.env.ZIXFLOW_API_KEY);
 
-const WhatsApp = require("zixflow/lib/services/whatsApp/whatsApp").default;
+const WhatsApp = require("zixflow/lib/services/whatsApp/whatsApp");
 const whatsApp = new WhatsApp(process.env.ZIXFLOW_API_KEY);
 ```
 ```js
 //For **ES6**
-import SMSClass from 'zixflow/lib/services/sms/sms.js';
-const SMS = SMSClass.default;
+import SMS from 'zixflow/lib/services/sms/sms.js';
 const sms = new SMS(process.env.ZIXFLOW_API_KEY);
 
-import EmailClass from 'zixflow/lib/services/email/email.js';
-const Email = EmailClass.default;
+import Email from 'zixflow/lib/services/email/email.js';
 const email = new Email(process.env.ZIXFLOW_API_KEY);
 
-import WhatsAppClass from 'zixflow/lib/services/whatsApp/whatsApp.js';
-const WhatsApp = WhatsAppClass.default;
+import WhatsApp from 'zixflow/lib/services/whatsApp/whatsApp.js';
 const whatsApp = new WhatsApp(process.env.ZIXFLOW_API_KEY);
 ```
 
@@ -208,13 +205,12 @@ Access SMS service from the SDK.
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 ```js
  //For **CommonJs**
- const SMS = require("zixflow/lib/services/sms/sms").default;
+ const SMS = require("zixflow/lib/services/sms/sms");
 
  or 
 
  //For **ES6**
- import SMSClass from 'zixflow/lib/services/sms/sms.js';
- const SMS = SMSClass.default
+ import SMS from 'zixflow/lib/services/sms/sms.js';
 ```
 
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
@@ -371,7 +367,6 @@ You can send marketing messages, newsletters, updates, coupons, and invitations 
 
 Begin by loading *Zixflow* SDK into your node js project.
 ```js
-
 //For **CommonJs**
 const Zixflow = require("zixflow");
 
@@ -391,7 +386,13 @@ Access email service from the SDK
 ```
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 ```js
- const Email = require("zixflow/lib/services/email/email").default;
+ //For **CommonJs**
+ const Email = require("zixflow/lib/services/email/email");
+
+ or 
+
+ //For **ES6**
+ import Email from 'zixflow/lib/services/email/email.js';
 ```
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
 ```js
@@ -493,7 +494,13 @@ Access whatsApp service from the SDK
 ```
 Alternatively if you do not want to load whole sdk you can also access individual services. To access individual service begin by importing that service
 ```js
-const WhatsApp = require("zixflow/lib/services/whatsApp/whatsApp").default;
+//For **CommonJs**
+ const WhatsApp = require("zixflow/lib/services/whatsApp/whatsApp");
+ 
+ or 
+
+ //For **ES6**
+ import WhatsApp from 'zixflow/lib/services/whatsApp/whatsApp.js';
 ```
 Create an instance of the service and assign it to a variable. Make sure you have configured your apikey in environment variable.
 ```js
