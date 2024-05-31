@@ -705,93 +705,9 @@ This API endpoint enables the retrieval of collection records data. The structur
 |   offset   |    `REQUIRED`     | number | The starting point from which the records are to be fetched within the entire dataset. In this case, it is set to 0, indicating that retrieval should commence from the beginning of the dataset. |
 
 
-## Server Response for Collection Service
 
-#### Once the data is successfully saved, you will receive a confirmation response.
 
-```js
- {
-      "status": true,
-      "message": "success",
-      "data": {
-      "name": "Test Record",
-      "firstName": "Test",
-      "lastName": "Record",
-      "emails": [
-            "user@zixflow.com"
-      ],
-      "phoneNumbers": [
-            "592965223",
-            "9176639301"
-      ],
-      "company": {
-            "_id": "64b60314e7cca0f47d780544",
-            "name": "Zixflow",
-            "avatar": ""
-      },
-      "jobTitle": "Developer",
-      "description": "",
-      "address": "Mumbai, India",
-      "emailValidation": {
-            "_id": "64ad815b273e66dae1afe124",
-            "color": "#dbeddb",
-            "name": "Deliverable",
-            "isArchived": false,
-            "order": 2
-      },
-      "facebook": "",
-      "instagram": "",
-      "linkedin": "",
-      "twitter": "",
-      "lastInteraction": "2023-11-06T02:34:45.405Z",
-      "timezone": {
-            "_id": "64ad82ba273e66dae1b04689",
-            "color": "#e3e2e0",
-            "name": "Pacific/Niue",
-            "isArchived": false,
-            "order": 1
-      },
-      "source": {
-            "_id": "64ad815b273e66dae1afe141",
-            "color": "#fadec9",
-            "name": "Manually created",
-            "isArchived": false,
-            "order": 1
-      },
-      "owner": {
-            "_id": "64411b92cc16b5b0b858cc5f",
-            "name": "Agent Account",
-            "avatar": "",
-            "email": "dummy@outlook.com"
-      },
-      "share": [],
-      "createdAt": "2023-07-14T07:55:43.517Z",
-      "apiCustomAttribute": "Custom data",
-      "apiPipeline": {
-            "_id": "6520b88e4f7b6dea01cf9b7b",
-            "name": "Stage 2",
-            "color": "#02b55c",
-            "order": 2,
-            "isArchived": false,
-            "timeInStatus": null,
-            "celebrationEnabled": false,
-            "statusType": "normal"
-      },
-      "apiPipeline1": {
-            "_id": "64ae5870a3325d97495572f2",
-            "name": "Stage 1",
-            "color": "#5e6ad2",
-            "isArchived": false,
-            "timeInStatus": 0,
-            "celebrationEnabled": false,
-            "statusType": "normal"
-      },
-      "apiNumber1": 20,
-      "apiNumber2": 30
-      }
-}
 
-```
 
 ---
 
@@ -809,6 +725,7 @@ This API endpoint enables the retrieval of selected collection record data. The 
 |    recordId    |    `REQUIRED`     | string  |         A unique identifier for the collection.          |
 
 ---
+
 
 ## Create a Collection Record
 

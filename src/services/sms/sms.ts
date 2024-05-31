@@ -33,6 +33,10 @@ class SMS {
   constructor(apiKey?: string, domain?: string) {
     this.__apiKey = apiKey || process.env.ZIXFLOW_API_KEY || '';
     this.domain = domain || process.env.ZIXFLOW_DOMAIN || 'https://api.zixflow.com';
+
+    if (!this.__apiKey) {
+      throw new Error('API key is required.');
+    }
   }
 
   /**

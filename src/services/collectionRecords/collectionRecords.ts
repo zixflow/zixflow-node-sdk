@@ -9,6 +9,7 @@ import {
   UPDATE_COLLECTION_RECORD,
 } from '../../constants';
 import axiosWrapper from '../../utilities/axiosRequestWrapper';
+import { validateParameters } from '../../utilities/validateParameters';
 
 /**
  * @summary Represents a Collection Records class instance used for creating , updating , fetching and deleting records.
@@ -38,10 +39,19 @@ class CollectionRecords {
   constructor(apiKey?: string, domain?: string) {
     this.__apiKey = apiKey || process.env.ZIXFLOW_API_KEY || '';
     this.domain = domain || process.env.ZIXFLOW_DOMAIN || 'https://api.zixflow.com';
+
+    
+    if (!this.__apiKey) {
+      throw new Error('API key is required.');
+    }
   }
+
+  
 
   async getListOfCollectionRecords(collectionId: string ): Promise<SuccessResponse | ErrorResponse> {
   
+    validateParameters({ collectionId }, ['collectionId']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${GET_LIST_OF_COLLECTION_RECORDS.replace('{collectionId}', collectionId)}`;
       
@@ -65,6 +75,8 @@ class CollectionRecords {
 
   async getCollectionRecordById(collectionId: string, recordId: string): Promise<SuccessResponse | ErrorResponse> {
    
+    validateParameters({ collectionId, recordId }, ['collectionId', 'recordId']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${GET_COLLECTION_RECORD_BY_ID.replace('{collectionId}', collectionId).replace('{recordId}', recordId)}`;
     
@@ -88,6 +100,8 @@ class CollectionRecords {
 
   async createCollectionRecord(collectionId: string, recordData: {}): Promise<SuccessResponse | ErrorResponse> {
    
+    validateParameters({ collectionId, recordData }, ['collectionId', 'recordData']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${CREATE_COLLECTION_RECORD.replace('{collectionId}', collectionId)}`;
       
@@ -116,6 +130,8 @@ class CollectionRecords {
     recordData: {},
   ): Promise<SuccessResponse | ErrorResponse> {
   
+    validateParameters({ collectionId, recordId, recordData }, ['collectionId', 'recordId', 'recordData']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${UPDATE_COLLECTION_RECORD.replace('{collectionId}', collectionId).replace('{recordId}', recordId)}`;
      
@@ -140,6 +156,8 @@ class CollectionRecords {
 
   async deleteCollectionRecordById(collectionId: string, recordId: string): Promise<SuccessResponse | ErrorResponse> {
     
+    validateParameters({ collectionId, recordId }, ['collectionId', 'recordId']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${DELETE_COLLECTION_RECORD_BY_ID.replace('{collectionId}', collectionId).replace('{recordId}', recordId)}`;
       

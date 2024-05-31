@@ -9,6 +9,7 @@ import {
   UPDATE_LIST_ENTRY,
 } from '../../constants';
 import axiosWrapper from '../../utilities/axiosRequestWrapper';
+import { validateParameters } from '../../utilities/validateParameters';
 
 /**
  * @summary Represents a List Entries class instance used for creating , updating , fetching and deleting entries.
@@ -38,10 +39,16 @@ class ListEntries {
   constructor(apiKey?: string, domain?: string) {
     this.__apiKey = apiKey || process.env.ZIXFLOW_API_KEY || '';
     this.domain = domain || process.env.ZIXFLOW_DOMAIN || 'https://api.zixflow.com';
+
+    if (!this.__apiKey) {
+      throw new Error('API key is required.');
+    }
   }
 
   async getListOfListEntries(listId: string): Promise<SuccessResponse | ErrorResponse> {
     
+    validateParameters({ listId }, ['listId']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${GET_LIST_OF_LIST_ENTRIES.replace('{listId}', listId)}`;
      
@@ -65,9 +72,10 @@ class ListEntries {
 
   async getListEntryById(listId: string, entryId: string): Promise<SuccessResponse | ErrorResponse> {
 
+    validateParameters({ listId, entryId }, ['listId', 'entryId']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${GET_LIST_ENTRY_BY_ID.replace('{listId}', listId).replace('{entryId}', entryId)}`;
-      console.log(apiUrl);
       const config: AxiosRequestConfig = createAxiosConfig({
         apiKey: this.__apiKey,
         apiUrl: apiUrl,
@@ -88,6 +96,8 @@ class ListEntries {
 
   async createListEntry(listId: string, recordData: {}): Promise<SuccessResponse | ErrorResponse> {
    
+    validateParameters({ listId, recordData }, ['listId', 'recordData']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${CREATE_LIST_ENTRY.replace('{listId}', listId)}`;
     
@@ -112,6 +122,8 @@ class ListEntries {
 
   async updateListEntry(listId: string, entryId: string, recordData: {}): Promise<SuccessResponse | ErrorResponse> {
     
+    validateParameters({ listId, entryId, recordData }, ['listId', 'entryId', 'recordData']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${UPDATE_LIST_ENTRY.replace('{listId}', listId).replace('{entryId}', entryId)}`;
    
@@ -136,6 +148,8 @@ class ListEntries {
 
   async deleleListEntryById(listId: string, entryId: string): Promise<SuccessResponse | ErrorResponse> {
     
+    validateParameters({ listId, entryId }, ['listId', 'entryId']);
+
     return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
       const apiUrl = `${this.domain}${DELETE_LIST_ENTRY_BY_ID.replace('{listId}', listId).replace('{entryId}', entryId)}`;
       

@@ -6,7 +6,6 @@ import errors from './errors.json';
 import CollectionRecords from './services/collectionRecords/collectionRecords';
 import ListEntries from './services/listEntries/listEntries';
 
-
 /**
  *@summary This represents an instance of Zixflow utilized for interacting with Zixflow services.
  *@description This class provides a convenient interface for accessing Zixflow's SMS, Email, and WhatsApp services.
@@ -83,6 +82,7 @@ class Zixflow {
 }
 
 export = Zixflow;
+
 
 
 
