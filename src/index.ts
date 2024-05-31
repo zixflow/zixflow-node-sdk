@@ -3,6 +3,10 @@ import SMS from './services/sms/sms';
 import WhatsApp from './services/whatsApp/whatsApp';
 import errors from './errors.json';
 
+import CollectionRecords from './services/collectionRecords/collectionRecords';
+import ListEntries from './services/listEntries/listEntries';
+
+
 /**
  *@summary This represents an instance of Zixflow utilized for interacting with Zixflow services.
  *@description This class provides a convenient interface for accessing Zixflow's SMS, Email, and WhatsApp services.
@@ -44,6 +48,11 @@ class Zixflow {
    */
   whatsApp: WhatsApp;
 
+
+  collectionRecords: CollectionRecords;
+
+  listEntries: ListEntries;
+
   /**
    *
    * @summary Creates a new Zixflow instance.
@@ -64,6 +73,9 @@ class Zixflow {
     this.email = new Email(this.__apiKey, this.domain);
     this.whatsApp = new WhatsApp(this.__apiKey, this.domain);
 
+    this.collectionRecords = new CollectionRecords(this.__apiKey , this.domain);
+    this.listEntries = new ListEntries(this.__apiKey , this.domain);
+
     if (this.__apiKey === undefined) throw Error(errors['SFV001']);
     if (typeof this.__apiKey !== 'string') throw Error(errors['SFT001']);
     if (this.__apiKey.trim() === '') throw Error(errors['SFV002']);
@@ -71,3 +83,7 @@ class Zixflow {
 }
 
 export = Zixflow;
+
+
+
+
