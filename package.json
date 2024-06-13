@@ -1,6 +1,6 @@
 {
   "name": "zixflow",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Zixflow Node SDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -9,7 +9,8 @@
     "build": "tsc",
     "test": "jest --config jestconfig.json",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "clear_jest": "jest --clearCache"
   },
   "repository": {
     "type": "git",

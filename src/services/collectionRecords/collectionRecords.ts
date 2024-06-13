@@ -83,7 +83,7 @@ class CollectionRecords {
       const config: AxiosRequestConfig = createAxiosConfig({
         apiKey: this.__apiKey,
         apiUrl: apiUrl,
-        method: 'post',
+        method: 'get',
       });
 
       axiosWrapper(config)
