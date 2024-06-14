@@ -45,130 +45,139 @@ class ListEntries {
     }
   }
 
-  async getListOfListEntries(listId: string): Promise<SuccessResponse | ErrorResponse> {
+  async getListOfListEntries(listId: string , data: any): Promise<SuccessResponse | ErrorResponse> {
+      try {
+        validateParameters({ listId }, ['listId']);
+
+        return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+          const apiUrl = `${this.domain}${GET_LIST_OF_LIST_ENTRIES.replace('{listId}', listId)}`;
+         
+          const config: AxiosRequestConfig = createAxiosConfig({
+            apiKey: this.__apiKey,
+            apiUrl: apiUrl,
+            method: 'post',
+            data
+          });
     
-    validateParameters({ listId }, ['listId']);
-
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${GET_LIST_OF_LIST_ENTRIES.replace('{listId}', listId)}`;
-     
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'post',
-      });
-
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+          axiosWrapper(config)
+            .then((response) => {
+                resolve(response);
+            })
+            .catch((error) => {
+              reject(error.response?.data);
+            });
         });
-    });
+      } catch (error) {
+        return Promise.reject(error.message)
+      }
+    
   }
 
   async getListEntryById(listId: string, entryId: string): Promise<SuccessResponse | ErrorResponse> {
+      try {
+        validateParameters({ listId, entryId }, ['listId', 'entryId']);
 
-    validateParameters({ listId, entryId }, ['listId', 'entryId']);
-
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${GET_LIST_ENTRY_BY_ID.replace('{listId}', listId).replace('{entryId}', entryId)}`;
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'get',
-      });
-
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+        return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+          const apiUrl = `${this.domain}${GET_LIST_ENTRY_BY_ID.replace('{listId}', listId).replace('{entryId}', entryId)}`;
+          const config: AxiosRequestConfig = createAxiosConfig({
+            apiKey: this.__apiKey,
+            apiUrl: apiUrl,
+            method: 'get',
+          });
+    
+          axiosWrapper(config)
+            .then((response) => {
+                resolve(response);
+            })
+            .catch((error) => {
+              reject(error.response?.data);
+            });
         });
-    });
+      } catch (error) {
+        return Promise.reject(error.message)
+      }
   }
 
-  async createListEntry(listId: string, recordData: {}): Promise<SuccessResponse | ErrorResponse> {
-   
-    validateParameters({ listId, recordData }, ['listId', 'recordData']);
+  async createListEntry(listId: string, recordData:any): Promise<SuccessResponse | ErrorResponse> {
+    try {
+      validateParameters({ listId, recordData }, ['listId', 'recordData']);
 
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${CREATE_LIST_ENTRY.replace('{listId}', listId)}`;
-    
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'post',
-        data: recordData,
-      });
-
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+      return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+        const apiUrl = `${this.domain}${CREATE_LIST_ENTRY.replace('{listId}', listId)}`;
+      
+        const config: AxiosRequestConfig = createAxiosConfig({
+          apiKey: this.__apiKey,
+          apiUrl: apiUrl,
+          method: 'post',
+          data: recordData,
         });
-    });
+  
+        axiosWrapper(config)
+          .then((response) => {
+              resolve(response);
+          })
+          .catch((error) => {
+            reject(error.response?.data);
+          });
+      });
+    } catch (error) {
+      return Promise.reject(error.message)
+    }
   }
 
-  async updateListEntry(listId: string, entryId: string, recordData: {}): Promise<SuccessResponse | ErrorResponse> {
-    
-    validateParameters({ listId, entryId, recordData }, ['listId', 'entryId', 'recordData']);
+  async updateListEntry(listId: string, entryId: string, recordData: any): Promise<SuccessResponse | ErrorResponse> {
+    try {
+      validateParameters({ listId, entryId, recordData }, ['listId', 'entryId', 'recordData']);
 
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${UPDATE_LIST_ENTRY.replace('{listId}', listId).replace('{entryId}', entryId)}`;
-   
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'patch',
-        data: recordData,
-      });
-
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+      return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+        const apiUrl = `${this.domain}${UPDATE_LIST_ENTRY.replace('{listId}', listId).replace('{entryId}', entryId)}`;
+     
+        const config: AxiosRequestConfig = createAxiosConfig({
+          apiKey: this.__apiKey,
+          apiUrl: apiUrl,
+          method: 'patch',
+          data: recordData,
         });
-    });
+  
+        axiosWrapper(config)
+          .then((response) => {
+              resolve(response);
+          })
+          .catch((error) => {
+            reject(error.response?.data);
+          });
+      });
+    } catch (error) {
+      return Promise.reject(error.message)
+    }
+  
   }
 
   async deleleListEntryById(listId: string, entryId: string): Promise<SuccessResponse | ErrorResponse> {
-    
-    validateParameters({ listId, entryId }, ['listId', 'entryId']);
+    try {
+      validateParameters({ listId, entryId }, ['listId', 'entryId']);
 
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${DELETE_LIST_ENTRY_BY_ID.replace('{listId}', listId).replace('{entryId}', entryId)}`;
-      
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'delete',
-      });
-
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+      return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+        const apiUrl = `${this.domain}${DELETE_LIST_ENTRY_BY_ID.replace('{listId}', listId).replace('{entryId}', entryId)}`;
+        
+        const config: AxiosRequestConfig = createAxiosConfig({
+          apiKey: this.__apiKey,
+          apiUrl: apiUrl,
+          method: 'delete',
         });
-    });
+  
+        axiosWrapper(config)
+          .then((response) => {
+              resolve(response);
+          })
+          .catch((error) => {
+            reject(error.response?.data);
+          });
+      });
+    } catch (error) {
+      return Promise.reject(error.message)
+    }
+   
   }
 }
 

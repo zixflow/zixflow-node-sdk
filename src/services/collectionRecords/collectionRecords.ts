@@ -48,36 +48,41 @@ class CollectionRecords {
 
   
 
-  async getListOfCollectionRecords(collectionId: string ): Promise<SuccessResponse | ErrorResponse> {
-  
-    validateParameters({ collectionId }, ['collectionId']);
+  async getListOfCollectionRecords(collectionId: string , data : any): Promise<SuccessResponse | ErrorResponse> {
+    try {
+      validateParameters({ collectionId }, ['collectionId']);
 
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${GET_LIST_OF_COLLECTION_RECORDS.replace('{collectionId}', collectionId)}`;
-      
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'post'
-      });
-
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+      return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+        const apiUrl = `${this.domain}${GET_LIST_OF_COLLECTION_RECORDS.replace('{collectionId}', collectionId)}`;
+        
+        const config: AxiosRequestConfig = createAxiosConfig({
+          apiKey: this.__apiKey,
+          apiUrl: apiUrl,
+          method: 'post',
+          data
         });
-    });
+  
+        axiosWrapper(config)
+          .then((response) => {
+              resolve(response);
+          })
+          .catch((error) => {
+            reject(error.response?.data.message);
+          });
+      });
+    } catch (error) {
+      return Promise.reject(error.message)
+    }
+    
   }
 
   async getCollectionRecordById(collectionId: string, recordId: string): Promise<SuccessResponse | ErrorResponse> {
    
+    try {
+          
     validateParameters({ collectionId, recordId }, ['collectionId', 'recordId']);
 
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
+    return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
       const apiUrl = `${this.domain}${GET_COLLECTION_RECORD_BY_ID.replace('{collectionId}', collectionId).replace('{recordId}', recordId)}`;
     
       const config: AxiosRequestConfig = createAxiosConfig({
@@ -88,95 +93,107 @@ class CollectionRecords {
 
       axiosWrapper(config)
         .then((response) => {
-          if (response) {
             resolve(response);
-          }
         })
         .catch((error) => {
-          resolve(error.response?.data);
+          reject(error.response?.data);
         });
     });
+    } catch (error) {
+      return Promise.reject(error.message)
+    }
+
   }
 
-  async createCollectionRecord(collectionId: string, recordData: {}): Promise<SuccessResponse | ErrorResponse> {
+  
+  async createCollectionRecord(collectionId: string, recordData: any): Promise<SuccessResponse | ErrorResponse> {
    
-    validateParameters({ collectionId, recordData }, ['collectionId', 'recordData']);
 
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${CREATE_COLLECTION_RECORD.replace('{collectionId}', collectionId)}`;
-      
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'post',
-        data: recordData,
-      });
+    try {
+      validateParameters({ collectionId, recordData }, ['collectionId', 'recordData']);
 
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+      return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+        const apiUrl = `${this.domain}${CREATE_COLLECTION_RECORD.replace('{collectionId}', collectionId)}`;
+        
+        const config: AxiosRequestConfig = createAxiosConfig({
+          apiKey: this.__apiKey,
+          apiUrl: apiUrl,
+          method: 'post',
+          data: recordData,
         });
-    });
+  
+        axiosWrapper(config)
+          .then((response) => {
+              resolve(response);
+          })
+          .catch((error) => {
+            reject(error.response?.data);
+          });
+      });
+    } catch (error) {
+      return Promise.reject(error.message)
+    }
   }
 
   async updateCollectionRecord(
     collectionId: string,
     recordId: string,
-    recordData: {},
+    recordData: any,
   ): Promise<SuccessResponse | ErrorResponse> {
   
-    validateParameters({ collectionId, recordId, recordData }, ['collectionId', 'recordId', 'recordData']);
+    try {
+      validateParameters({ collectionId, recordId, recordData }, ['collectionId', 'recordId', 'recordData']);
 
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${UPDATE_COLLECTION_RECORD.replace('{collectionId}', collectionId).replace('{recordId}', recordId)}`;
-     
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'patch',
-        data: recordData,
-      });
-
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+      return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+        const apiUrl = `${this.domain}${UPDATE_COLLECTION_RECORD.replace('{collectionId}', collectionId).replace('{recordId}', recordId)}`;
+       
+        const config: AxiosRequestConfig = createAxiosConfig({
+          apiKey: this.__apiKey,
+          apiUrl: apiUrl,
+          method: 'patch',
+          data: recordData,
         });
-    });
+  
+        axiosWrapper(config)
+          .then((response) => {
+              resolve(response);
+          })
+          .catch((error) => {
+            reject(error.response?.data);
+          });
+      });
+    } catch (error) {
+      return Promise.reject(error.message)
+    }
+    
+    
   }
 
   async deleteCollectionRecordById(collectionId: string, recordId: string): Promise<SuccessResponse | ErrorResponse> {
     
-    validateParameters({ collectionId, recordId }, ['collectionId', 'recordId']);
+    try {
+      validateParameters({ collectionId, recordId }, ['collectionId', 'recordId']);
 
-    return new Promise<SuccessResponse | ErrorResponse>((resolve) => {
-      const apiUrl = `${this.domain}${DELETE_COLLECTION_RECORD_BY_ID.replace('{collectionId}', collectionId).replace('{recordId}', recordId)}`;
-      
-      const config: AxiosRequestConfig = createAxiosConfig({
-        apiKey: this.__apiKey,
-        apiUrl: apiUrl,
-        method: 'delete',
-      });
-
-      axiosWrapper(config)
-        .then((response) => {
-          if (response) {
-            resolve(response);
-          }
-        })
-        .catch((error) => {
-          resolve(error.response?.data);
+      return new Promise<SuccessResponse | ErrorResponse>((resolve , reject) => {
+        const apiUrl = `${this.domain}${DELETE_COLLECTION_RECORD_BY_ID.replace('{collectionId}', collectionId).replace('{recordId}', recordId)}`;
+        
+        const config: AxiosRequestConfig = createAxiosConfig({
+          apiKey: this.__apiKey,
+          apiUrl: apiUrl,
+          method: 'delete',
         });
-    });
+  
+        axiosWrapper(config)
+          .then((response) => {
+              resolve(response);
+          })
+          .catch((error) => {
+            reject(error.response?.data);
+          });
+      });
+    } catch (error) {
+      return Promise.reject(error.message)
+    }
   }
 }
 

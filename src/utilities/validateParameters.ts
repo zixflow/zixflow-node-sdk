@@ -10,4 +10,5 @@ export function validateParameters(params: { [key: string]: any }, requiredParam
     if (missingParams.length > 0) {
       throw new Error(`Missing required parameter(s): ${missingParams.join(', ')}`);
     }
+
   }

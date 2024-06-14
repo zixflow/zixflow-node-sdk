@@ -26,6 +26,8 @@ describe('CollectionRecords - getListOfCollectionRecords', () => {
     jest.clearAllMocks();
   });
 
+  const filterData = {}
+
   it('should return collection records', async () => {
     const successResponse = {
       status: true,
@@ -59,13 +61,14 @@ describe('CollectionRecords - getListOfCollectionRecords', () => {
 
     mockedAxiosWrapper.mockResolvedValueOnce(successResponse);
 
-    const result = await collectionRecords.getListOfCollectionRecords(collectionId);
+    const result = await collectionRecords.getListOfCollectionRecords(collectionId , filterData);
 
     expect(mockedValidateParameters).toHaveBeenCalledWith({ collectionId }, ['collectionId']);
     expect(mockedCreateAxiosConfig).toHaveBeenCalledWith({
       apiKey,
       apiUrl: api_url,
       method: 'post',
+      data: filterData
     });
     expect(result).toEqual(
       expect.objectContaining({
