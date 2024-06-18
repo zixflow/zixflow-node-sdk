@@ -883,16 +883,110 @@ This API endpoint enables the retrieval of list entries. The structure of the li
 
 ## Get List Entry By Id
 
-This API endpoint enables the retrieval of list entries. The structure of the list entries is dynamic and varies depending on the list and attributes, with no fixed response keys within the data.
+This API endpoint enables the retrieval of selected list entry data. The structure of the list entry data is dynamic and varies depending on the list, with no fixed response keys within the data.
+
+## <center>Required Path configuration options for fetching a entry from a List 
+
+## Path
+
+|    option    | required/optional |  type  |                                                                                            description                                                                                            |
+| :----------: | :---------------: | :----: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| listId |    `REQUIRED`     | string |                                                                              A unique identifier for the list.                                                                              |
+|    entryId    |    `REQUIRED`     | string  |         A unique identifier for the entry.          |
+
+---
 
 ## Create a List Entry
 
-This API endpoint allows the creation of a new entry within a specified list. The list entry is associated with a collection record, and additional data can be provided based on the attributes of the list.
+This API endpoint enables the creation of a new list entry within a specified collection. The list entry is associated with the provided list ID.
 
+## <center>Required path and body configuration options for creating a entry in specified List 
+
+## Path
+
+|    option    | required/optional |  type  |                                                                                            description                                                                                            |
+| :----------: | :---------------: | :----: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| listId |    `REQUIRED`     | string |                                                                              A unique identifier for the list where the entry will be added.                                                                              |
+
+
+## Body
+
+|    option    | required/optional |  type  |                                                                                            description                                                                                            |
+| :----------: | :---------------: | :----: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    body      |    `REQUIRED`     | key-value |         Key-value pairs representing data for the list entry. Keys are defined by the attribute API key name, and values depend on the input type of the attribute.          |
+
+
+## Response from server
+
+```js
+{
+    "status": true,
+    "message": "List entry created successfully!",
+    "data": {
+        "listId": "6551fdcad2d75edff28c9085",
+        "peopleId": "654566f0c57bc82e28e5bb40",
+        "companyId": null,
+        "dealId": null,
+        "recordId": null,
+        "owner": "63d0e0b2eaa35b73f3b2344e",
+        "_id": "6551fe0c92dc3d7c3aa20e12",
+        "createdAt": "2023-11-13T10:44:28.028Z",
+        "updatedAt": "2023-11-13T10:44:28.028Z",
+        "__v": 0
+        <!-- Additional fields based on list attributes -->
+    }
+}
+
+```
+
+---
 ## Update List Entry
 
-This API endpoint allows the modification of an existing entry within a specified list. The list entry is identified by its unique ID, and data can be updated based on the attributes of the list.
+This API endpoint allows the modification of an existing entry within a specified list. The entry to be updated is identified by the provided list ID and entry ID.
+
+## <center>Required Path and Body configuration options for updating a entry in a specified list 
+
+## Path
+
+|    option    | required/optional |  type  |                                                                                            description                                                                                            |
+| :----------: | :---------------: | :----: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| listId |    `REQUIRED`     | string |                                                                              A unique identifier for the list where the entry will be added.                                                                              |
+| entryId |    `REQUIRED`     | string |                                                                              The unique identifier for the entry to be updated within the specified list.                                                                              |
+
+
+## Body
+
+|    option    | required/optional |  type  |                                                                                            description                                                                                            |
+| :----------: | :---------------: | :----: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    body      |    `REQUIRED`     | key-value |         Key-value pairs representing data for the list. Keys are defined by the attribute API key name, and values depend on the input type of the attribute.          |
+
+## Response from server
+
+```js
+{
+    "status": true,
+    "message": "List entry updated successfully!"
+}
+```
 
 ## Delete List Entry By Id
 
-This API endpoint enables the deletion of a specific list entry by providing the unique identifiers of both the list and the entry.
+This API endpoint facilitates the removal of a specific list entry by providing the unique identifiers of both the list and the entry.
+
+## <center>Required Path configuration options for deleting a entry in a specified List 
+
+## Path
+
+|    option    | required/optional |  type  |                                                                                            description                                                                                            |
+| :----------: | :---------------: | :----: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| listId |    `REQUIRED`     | string |                                                                              A unique identifier for the list, allowing for precise referencing.                                                                             |
+| entryId |    `REQUIRED`     | string |                                                                              A unique identifier for the list entry to be deleted.                                                                             |
+
+## Response from server
+
+```js
+{
+    "status": true,
+    "message": "List Entry deleted successfully"
+}
+```
