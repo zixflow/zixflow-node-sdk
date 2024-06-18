@@ -20,6 +20,8 @@ https://zixflow.com/
    1. [SMS](#sms-service)
    2. [Email](#email-service)
    3. [WhatsApp](#whatsApp-service)
+   4. [Collections](#collection-records)
+   5. [Lists](#list-entries)
 
 ---
 
