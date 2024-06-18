@@ -13,7 +13,7 @@ import { validateParameters } from '../../utilities/validateParameters';
 
 /**
  * @summary Represents a List Entries class instance used for creating , updating , fetching and deleting entries.
- * @description This class provides a methods to do CRUD.
+ * @description This class provides a methods to create , update , delete and find list entries.
  * @property {string} __apiKey - The Zixflow API key used for authentication.
  * @property {string} domain - The base domain URL for Zixflow API requests.
  */
@@ -31,10 +31,10 @@ class ListEntries {
   private domain: string;
 
   /**
-   * @summary Creates a new SMS service instance.
+   * @summary Creates a new ListEntries service instance.
    * @param {string} [apiKey] The Zixflow API key. If not provided here, it will be retrieved from the environment variable ZIXFLOW_API_KEY. If it cannot be found there, an error will be thrown.
-   * @param {string} [domain] The Zixflow API domain. This specifies the domain for API requests related to SMS functionality. If not provided, the constructor will attempt to retrieve it from the environment variable ZIXFLOW_DOMAIN. If that's not available either, it will default to "https://api.zixflow.com".
-   * @returns {SMS}  Instance of SMS class
+   * @param {string} [domain] The Zixflow API domain. This specifies the domain for API requests related to Lists functionality. If not provided, the constructor will attempt to retrieve it from the environment variable ZIXFLOW_DOMAIN. If that's not available either, it will default to "https://api.zixflow.com".
+   * @returns {SMS}  Instance of ListEntries class
    */
   constructor(apiKey?: string, domain?: string) {
     this.__apiKey = apiKey || process.env.ZIXFLOW_API_KEY || '';
